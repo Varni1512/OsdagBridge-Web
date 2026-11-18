@@ -34,73 +34,30 @@ export const SetBoundsModal: React.FC<SetBoundsModalProps> = ({
 
   return (
     <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.35)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 10005,
-      }}
+      className="fixed inset-0 bg-black/35 flex items-center justify-center z-[10005]"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div
-        style={{
-          width: '370px',
-          backgroundColor: '#ffffff',
-          borderRadius: '4px',
-          border: '1.5px solid #8cae11',
-          boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-          fontFamily: 'inherit',
-        }}
-      >
+      <div className="w-[370px] bg-white rounded-[4px] border-[1.5px] border-[#8cae11] shadow-[0_10px_25px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden font-sans">
         {/* Title Bar */}
-        <div
-          style={{
-            height: '32px',
-            backgroundColor: '#ffffff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '0 10px',
-            borderBottom: '2px solid #8cae11',
-            userSelect: 'none',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div className="h-8 bg-white flex items-center justify-between px-2.5 border-b-2 border-[#8cae11] select-none">
+          <div className="flex items-center gap-2">
             <img
               src="/vectors/Osdag_logo.svg"
               alt="Osdag"
               width={18}
               height={18}
-              style={{ display: 'block', pointerEvents: 'none' }}
+              className="block pointer-events-none"
             />
-            <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#000000' }}>
+            <span className="text-[13px] font-bold text-black">
               Set Bounds
             </span>
           </div>
           <button
             type="button"
             onClick={onClose}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '15px',
-              fontWeight: 'bold',
-              color: '#000000',
-              cursor: 'pointer',
-              lineHeight: 1,
-              padding: '2px 6px',
-            }}
+            className="bg-transparent border-0 text-[15px] font-bold text-black cursor-pointer leading-none px-1.5 py-0.5 hover:text-[#555555]"
             aria-label="Close"
           >
             ✕
@@ -108,10 +65,10 @@ export const SetBoundsModal: React.FC<SetBoundsModalProps> = ({
         </div>
 
         {/* Body */}
-        <div style={{ padding: '22px 24px 18px 24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div className="p-[22px_24px_18px_24px] flex flex-col gap-4">
           {/* Lower Bound */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <label style={{ fontSize: '13px', fontWeight: 'bold', color: '#000000' }}>
+          <div className="flex items-center justify-between">
+            <label className="text-[13px] font-bold text-black">
               Lower Bound:
             </label>
             <input
@@ -119,25 +76,13 @@ export const SetBoundsModal: React.FC<SetBoundsModalProps> = ({
               value={lower}
               placeholder="Min: 8.00"
               onChange={(e) => setLower(e.target.value)}
-              style={{
-                width: '145px',
-                height: '30px',
-                padding: '2px 10px',
-                fontSize: '13px',
-                fontWeight: 600,
-                border: '1.5px solid #8cae11',
-                borderRadius: '6px',
-                outline: 'none',
-                backgroundColor: '#ffffff',
-                color: '#000000',
-                boxSizing: 'border-box',
-              }}
+              className="w-[145px] h-[30px] px-2.5 py-0.5 text-[13px] font-semibold border-[1.5px] border-[#8cae11] rounded-[6px] outline-none bg-white text-black box-border"
             />
           </div>
 
           {/* Upper Bound */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <label style={{ fontSize: '13px', fontWeight: 'bold', color: '#000000' }}>
+          <div className="flex items-center justify-between">
+            <label className="text-[13px] font-bold text-black">
               Upper Bound:
             </label>
             <input
@@ -145,59 +90,23 @@ export const SetBoundsModal: React.FC<SetBoundsModalProps> = ({
               value={upper}
               placeholder="Max: 40.00"
               onChange={(e) => setUpper(e.target.value)}
-              style={{
-                width: '145px',
-                height: '30px',
-                padding: '2px 10px',
-                fontSize: '13px',
-                fontWeight: 600,
-                border: '1.5px solid #c0c0c0',
-                borderRadius: '6px',
-                outline: 'none',
-                backgroundColor: '#ffffff',
-                color: '#000000',
-                boxSizing: 'border-box',
-              }}
+              className="w-[145px] h-[30px] px-2.5 py-0.5 text-[13px] font-semibold border-[1.5px] border-[#c0c0c0] focus:border-[#8cae11] rounded-[6px] outline-none bg-white text-black box-border"
             />
           </div>
 
           {/* Action Buttons */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
+          <div className="flex justify-end gap-2.5 mt-2.5">
             <button
               type="button"
               onClick={onClose}
-              style={{
-                width: '78px',
-                height: '30px',
-                backgroundColor: '#ffffff',
-                border: '1.5px solid #000000',
-                borderRadius: '6px',
-                color: '#000000',
-                fontSize: '13px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f2f2f2')}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#ffffff')}
+              className="w-[78px] h-[30px] bg-white hover:bg-[#f2f2f2] border-[1.5px] border-black rounded-[6px] text-black text-[13px] font-bold cursor-pointer transition-colors"
             >
               Cancel
             </button>
             <button
               type="button"
               onClick={handleOK}
-              style={{
-                width: '60px',
-                height: '30px',
-                backgroundColor: '#ffffff',
-                border: '1.5px solid #000000',
-                borderRadius: '6px',
-                color: '#000000',
-                fontSize: '13px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f2f2f2')}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#ffffff')}
+              className="w-[60px] h-[30px] bg-white hover:bg-[#f2f2f2] border-[1.5px] border-black rounded-[6px] text-black text-[13px] font-bold cursor-pointer transition-colors"
             >
               OK
             </button>
@@ -207,4 +116,3 @@ export const SetBoundsModal: React.FC<SetBoundsModalProps> = ({
     </div>
   );
 };
-

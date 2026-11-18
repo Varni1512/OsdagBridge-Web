@@ -62,77 +62,28 @@ export const LoadCombinationSubTab: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', gap: '16px', height: '100%', minHeight: 0 }}>
+    <div className="flex gap-4 h-full min-h-0">
       {/* Left Column */}
-      <div
-        className="hide-scrollbar"
-        style={{
-          flex: '1.2',
-          minWidth: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          height: '100%',
-          overflowY: 'auto',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          paddingRight: '2px',
-          paddingBottom: '8px',
-        }}
-      >
+      <div className="hide-scrollbar flex-[1.2] min-w-0 flex flex-col gap-3 h-full overflow-y-auto pr-0.5 pb-2">
         {/* Load Combinations from IRC 6 */}
-        <div
-          style={{
-            border: '1px solid #c0c0c0',
-            borderRadius: '6px',
-            padding: '12px 16px',
-            backgroundColor: '#ffffff',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000', marginBottom: '10px' }}>
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white flex flex-col">
+          <div className="text-xs font-bold text-black mb-2.5">
             Load Combinations from IRC 6
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '6px',
-            }}
-          >
+          <div className="flex flex-col gap-1.5">
             {DEFAULT_COMBINATIONS.map((c) => {
               const checked = additionalInputs[`loading.load_combination.${c.id}`] ?? true;
               return (
                 <div
                   key={c.id}
                   onClick={() => handleToggle(c.id, Boolean(checked))}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '4px 2px',
-                    cursor: 'pointer',
-                    borderRadius: '3px',
-                    transition: 'background-color 0.1s ease',
-                  }}
-                  onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f7f7f7')}
-                  onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = 'transparent')}
+                  className="flex items-center justify-between p-[4px_2px] cursor-pointer rounded-[3px] transition-colors hover:bg-[#f7f7f7]"
                 >
-                  <label
-                    style={{
-                      fontSize: '11.5px',
-                      color: '#000000',
-                      cursor: 'pointer',
-                      userSelect: 'none',
-                      fontFamily: 'inherit',
-                      paddingRight: '12px',
-                    }}
-                  >
+                  <label className="text-[11.5px] text-black cursor-pointer select-none font-sans pr-3">
                     {c.name} : {c.expr}
                   </label>
-                  <div style={{ width: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div className="w-10 flex items-center justify-center">
                     <OsdagCheckbox
                       checked={Boolean(checked)}
                       onChange={() => handleToggle(c.id, Boolean(checked))}
@@ -146,38 +97,20 @@ export const LoadCombinationSubTab: React.FC = () => {
         </div>
 
         {/* Add Custom Combination Box */}
-        <div
-          style={{
-            border: '1px solid #c0c0c0',
-            borderRadius: '6px',
-            padding: '12px 16px',
-            backgroundColor: '#ffffff',
-          }}
-        >
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
           <button
             type="button"
             onClick={() => setIsAddingCustom(true)}
-            style={{
-              backgroundColor: '#ffffff',
-              border: '1px solid #757575',
-              borderRadius: '4px',
-              padding: '5px 14px',
-              fontSize: '11.5px',
-              fontWeight: 600,
-              color: '#333333',
-              cursor: 'pointer',
-              transition: 'background-color 0.1s ease',
-              marginBottom: customCombos.length > 0 ? '12px' : 0,
-            }}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f0f0f0')}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#ffffff')}
+            className={`bg-white hover:bg-[#f0f0f0] border border-[#757575] rounded-[4px] p-[5px_14px] text-[11.5px] font-semibold text-[#333333] cursor-pointer transition-colors ${
+              customCombos.length > 0 ? 'mb-3' : 'mb-0'
+            }`}
           >
             Add Custom Combination
           </button>
 
-          {/* Custom combinations created by user - displayed in this bottom card */}
+          {/* Custom combinations created by user */}
           {customCombos.length > 0 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <div className="flex flex-col gap-1.5">
               {customCombos.map((c) => {
                 const checked = additionalInputs[`loading.load_combination.${c.id}`] ?? true;
                 const displayText = c.expr && c.expr !== c.name ? `${c.name} : ${c.expr}` : c.name;
@@ -185,31 +118,12 @@ export const LoadCombinationSubTab: React.FC = () => {
                   <div
                     key={c.id}
                     onClick={() => handleToggle(c.id, Boolean(checked))}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '4px 2px',
-                      cursor: 'pointer',
-                      borderRadius: '3px',
-                      transition: 'background-color 0.1s ease',
-                    }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f7f7f7')}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = 'transparent')}
+                    className="flex items-center justify-between p-[4px_2px] cursor-pointer rounded-[3px] transition-colors hover:bg-[#f7f7f7]"
                   >
-                    <label
-                      style={{
-                        fontSize: '11.5px',
-                        color: '#000000',
-                        cursor: 'pointer',
-                        userSelect: 'none',
-                        fontFamily: 'inherit',
-                        paddingRight: '12px',
-                      }}
-                    >
+                    <label className="text-[11.5px] text-black cursor-pointer select-none font-sans pr-3">
                       {displayText}
                     </label>
-                    <div style={{ width: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div className="w-10 flex items-center justify-center">
                       <OsdagCheckbox
                         checked={Boolean(checked)}
                         onChange={() => handleToggle(c.id, Boolean(checked))}
@@ -233,34 +147,33 @@ export const LoadCombinationSubTab: React.FC = () => {
 
       {/* Right Column: Description Panel */}
       <LoadDescriptionPanel title="Load Combinations (IRC 6)">
-        <p style={{ margin: '0 0 2px 0' }}>
+        <p className="mb-0.5">
           Load combinations are formed per IRC 6 Table B.1. The following load cases are considered:
         </p>
-        <p style={{ margin: '0 0 1px 0' }}>SW: Self-weight of steel girder</p>
-        <p style={{ margin: '0 0 1px 0' }}>
+        <p className="mb-[1px]">SW: Self-weight of steel girder</p>
+        <p className="mb-[1px]">
           DC: Weight of structural steel components other than the girder, including cross bracing and end diaphragms
         </p>
-        <p style={{ margin: '0 0 1px 0' }}>DD: Deck weight</p>
-        <p style={{ margin: '0 0 1px 0' }}>DW: Wearing course</p>
-        <p style={{ margin: '0 0 1px 0' }}>SIDL: Crash barriers, median, railing</p>
-        <p style={{ margin: '0 0 1px 0' }}>LL: Live load</p>
-        <p style={{ margin: '0 0 1px 0' }}>WL: Wind load</p>
-        <p style={{ margin: '0 0 1px 0' }}>EL: Seismic / earthquake load</p>
-        <p style={{ margin: '0 0 8px 0' }}>TL: Temperature load</p>
+        <p className="mb-[1px]">DD: Deck weight</p>
+        <p className="mb-[1px]">DW: Wearing course</p>
+        <p className="mb-[1px]">SIDL: Crash barriers, median, railing</p>
+        <p className="mb-[1px]">LL: Live load</p>
+        <p className="mb-[1px]">WL: Wind load</p>
+        <p className="mb-[1px]">EL: Seismic / earthquake load</p>
+        <p className="mb-2">TL: Temperature load</p>
 
-        <p style={{ margin: '0 0 2px 0' }}>IRC 6 combination types:</p>
-        <p style={{ margin: '0 0 1px 0' }}>- Basic combination</p>
-        <p style={{ margin: '0 0 1px 0' }}>- Accidental combination</p>
-        <p style={{ margin: '0 0 1px 0' }}>- Seismic combination</p>
-        <p style={{ margin: '0 0 1px 0' }}>- Frequent combination</p>
-        <p style={{ margin: '0 0 1px 0' }}>- Rare combination</p>
-        <p style={{ margin: '0 0 8px 0' }}>- Quasi-permanent combination</p>
+        <p className="mb-0.5">IRC 6 combination types:</p>
+        <p className="mb-[1px]">- Basic combination</p>
+        <p className="mb-[1px]">- Accidental combination</p>
+        <p className="mb-[1px]">- Seismic combination</p>
+        <p className="mb-[1px]">- Frequent combination</p>
+        <p className="mb-[1px]">- Rare combination</p>
+        <p className="mb-2">- Quasi-permanent combination</p>
 
-        <p style={{ margin: 0 }}>
+        <p className="m-0">
           Custom load combinations with user-defined partial safety factors can also be added.
         </p>
       </LoadDescriptionPanel>
     </div>
   );
 };
-

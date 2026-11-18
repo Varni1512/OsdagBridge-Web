@@ -7,35 +7,11 @@ interface LoadDescriptionPanelProps {
 
 export const LoadDescriptionPanel: React.FC<LoadDescriptionPanelProps> = ({ title, children }) => {
   return (
-    <div
-      style={{
-        flex: 1,
-        minWidth: 0,
-        height: '100%',
-        backgroundColor: '#c8c8c8',
-        border: '1px solid #b5b5b5',
-        borderRadius: '6px',
-        padding: '12px 14px',
-        overflowY: 'auto',
-        boxSizing: 'border-box',
-        fontSize: '11px',
-        color: '#000000',
-        lineHeight: 1.38,
-      }}
-    >
-      <div
-        style={{
-          textAlign: 'center',
-          fontWeight: 'bold',
-          fontSize: '12px',
-          color: '#000000',
-          marginBottom: '10px',
-        }}
-      >
+    <div className="flex-1 min-w-0 h-full bg-[#c8c8c8] border border-[#b5b5b5] rounded-[6px] p-[12px_14px] overflow-y-auto box-border text-[11px] text-black leading-[1.38]">
+      <div className="text-center font-bold text-xs text-black mb-2.5">
         {title}
       </div>
       <div>{children}</div>
     </div>
   );
 };
-

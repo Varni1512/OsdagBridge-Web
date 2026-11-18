@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useBridgeStore } from '../../../../store/useBridgeStore';
-import { inputStyle } from '../styles';
+import { inputClass, selectClass } from '../styles';
 import { LoadDescriptionPanel } from '../loading/sub-tabs/LoadDescriptionPanel';
 import { SetBoundsModal } from './SetBoundsModal';
 
@@ -59,70 +59,15 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
     updateAdditionalInput('design_options.deck.rebar_upper_bound', upper);
   };
 
-  const cardStyle: React.CSSProperties = {
-    border: '1px solid #c0c0c0',
-    borderRadius: '6px',
-    padding: '12px 16px',
-    backgroundColor: '#ffffff',
-  };
-
-  const cardTitleStyle: React.CSSProperties = {
-    fontSize: '12px',
-    fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: '10px',
-  };
-
-  const rowStyle: React.CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  };
-
-  const labelStyle: React.CSSProperties = {
-    fontSize: '12px',
-    color: '#000000',
-  };
-
-  const fieldStyle: React.CSSProperties = {
-    ...inputStyle,
-    width: '186px',
-  };
-
   return (
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        minHeight: 0,
-        height: '100%',
-        margin: '0 14px 6px 14px',
-        gap: '16px',
-        overflow: 'hidden',
-      }}
-    >
+    <div className="flex-1 flex min-h-0 h-full mx-3.5 mb-1.5 gap-4 overflow-hidden">
       {/* Left Column: Input Cards */}
-      <div
-        className="hide-scrollbar"
-        style={{
-          flex: '1.2',
-          minWidth: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          height: '100%',
-          overflowY: 'auto',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          paddingRight: '2px',
-          paddingBottom: '8px',
-        }}
-      >
+      <div className="hide-scrollbar flex-[1.2] min-w-0 flex flex-col gap-3 h-full overflow-y-auto pr-0.5 pb-2">
         {/* Card 1: Construction Stages */}
-        <div style={cardStyle}>
-          <div style={cardTitleStyle}>Construction Stages</div>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Include default</label>
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+          <div className="text-xs font-bold text-black mb-2.5">Construction Stages</div>
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-black">Include default</label>
             <select
               value={includeDefaultStages}
               onChange={(e) =>
@@ -131,8 +76,7 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                   e.target.value
                 )
               }
-              className="osdag-select-field"
-              style={fieldStyle}
+              className={selectClass}
             >
               <option value="Yes">Yes</option>
               <option value="No">No</option>
@@ -141,41 +85,24 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
         </div>
 
         {/* Card 2: Deck Design */}
-        <div style={cardStyle}>
-          <div style={cardTitleStyle}>Deck Design</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+          <div className="text-xs font-bold text-black mb-2.5">Deck Design</div>
+          <div className="flex flex-col gap-2">
             {/* Reinforcement Size */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Reinforcement Size</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Reinforcement Size</label>
               <button
                 type="button"
                 onClick={() => setIsSetBoundsOpen(true)}
-                style={{
-                  width: '186px',
-                  height: '24px',
-                  backgroundColor: '#f5f5f5',
-                  border: '1px solid #757575',
-                  borderRadius: '4px',
-                  fontSize: '11.5px',
-                  fontWeight: 600,
-                  color: '#222222',
-                  cursor: 'pointer',
-                  textAlign: 'center',
-                }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLElement).style.backgroundColor = '#e8e8e8')
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLElement).style.backgroundColor = '#f5f5f5')
-                }
+                className="w-[186px] h-6 bg-[#f5f5f5] hover:bg-[#e8e8e8] border border-[#757575] rounded-[4px] text-[11.5px] font-semibold text-[#222222] cursor-pointer text-center transition-colors"
               >
                 Set Bounds
               </button>
             </div>
 
             {/* Reinforcement Material */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Reinforcement Material</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Reinforcement Material</label>
               <select
                 value={rebarMaterial}
                 onChange={(e) =>
@@ -184,8 +111,7 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                className="osdag-select-field"
-                style={fieldStyle}
+                className={selectClass}
               >
                 {REINFORCEMENT_MATERIALS.map((mat) => (
                   <option key={mat} value={mat}>
@@ -196,8 +122,8 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
             </div>
 
             {/* Top Clear Cover (mm) */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Top Clear Cover (mm)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Top Clear Cover (mm)</label>
               <input
                 type="text"
                 value={topClearCover}
@@ -207,13 +133,13 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                style={fieldStyle}
+                className={inputClass}
               />
             </div>
 
             {/* Bottom Clear Cover (mm) */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Bottom Clear Cover (mm)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Bottom Clear Cover (mm)</label>
               <input
                 type="text"
                 value={bottomClearCover}
@@ -223,13 +149,13 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                style={fieldStyle}
+                className={inputClass}
               />
             </div>
 
             {/* Side Clear Cover (mm) */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Side Clear Cover (mm)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Side Clear Cover (mm)</label>
               <input
                 type="text"
                 value={sideClearCover}
@@ -239,19 +165,19 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                style={fieldStyle}
+                className={inputClass}
               />
             </div>
           </div>
         </div>
 
         {/* Card 3: Shear Studs */}
-        <div style={cardStyle}>
-          <div style={cardTitleStyle}>Shear Studs</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+          <div className="text-xs font-bold text-black mb-2.5">Shear Studs</div>
+          <div className="flex flex-col gap-2">
             {/* Yield Strength (MPa) */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Yield Strength (MPa)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Yield Strength (MPa)</label>
               <input
                 type="text"
                 value={yieldStrength}
@@ -261,13 +187,13 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                style={fieldStyle}
+                className={inputClass}
               />
             </div>
 
             {/* Ultimate Strength (MPa) */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Ultimate Strength (MPa)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Ultimate Strength (MPa)</label>
               <input
                 type="text"
                 value={ultimateStrength}
@@ -277,13 +203,13 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                style={fieldStyle}
+                className={inputClass}
               />
             </div>
 
             {/* Diameter (mm) */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Diameter (mm)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Diameter (mm)</label>
               <select
                 value={studDiameter}
                 onChange={(e) =>
@@ -292,8 +218,7 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                className="osdag-select-field"
-                style={fieldStyle}
+                className={selectClass}
               >
                 {SHEAR_STUD_DIAMETERS.map((d) => (
                   <option key={d} value={d}>
@@ -304,8 +229,8 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
             </div>
 
             {/* Height (mm) */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Height (mm)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Height (mm)</label>
               <input
                 type="text"
                 value={studHeight}
@@ -315,13 +240,13 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                style={fieldStyle}
+                className={inputClass}
               />
             </div>
 
             {/* No. of Shear Studs per Section */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>No. of Shear Studs per Section</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">No. of Shear Studs per Section</label>
               <select
                 value={studCount}
                 onChange={(e) =>
@@ -330,8 +255,7 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                className="osdag-select-field"
-                style={fieldStyle}
+                className={selectClass}
               >
                 {SHEAR_STUD_COUNTS.map((cnt) => (
                   <option key={cnt} value={cnt}>
@@ -342,8 +266,8 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
             </div>
 
             {/* Transverse Spacing (mm) */}
-            <div style={rowStyle}>
-              <label style={labelStyle}>Transverse Spacing (mm)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Transverse Spacing (mm)</label>
               <input
                 type="text"
                 value={transverseSpacing}
@@ -353,7 +277,7 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                style={fieldStyle}
+                className={inputClass}
               />
             </div>
           </div>
@@ -362,7 +286,7 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
 
       {/* Right Column: Description Panel */}
       <LoadDescriptionPanel title="Construction Stages">
-        <p style={{ margin: '0 0 10px 0' }}>
+        <p className="mb-2.5">
           When included ('Yes'), the analysis accounts for three stages.
           <br />
           In Stage 1, the steel girder carries its self-weight alone.
@@ -378,7 +302,7 @@ export const AnalysisDesignOptionsTab: React.FC = () => {
           Stages 1 and 2 are critical for lateral-torsional buckling (LTB) checks, as the
           compression flange is unrestrained until the deck provides lateral support.
         </p>
-        <p style={{ margin: 0 }}>
+        <p className="m-0">
           When 'No' is selected, only the final composite state is checked and no
           separate construction-stage verification is performed.
         </p>

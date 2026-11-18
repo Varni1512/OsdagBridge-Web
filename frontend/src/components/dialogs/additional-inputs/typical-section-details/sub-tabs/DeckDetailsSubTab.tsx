@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBridgeStore } from '../../../../../store/useBridgeStore';
-import { inputStyle, readOnlyInputStyle } from '../../styles';
+import { inputClass, readOnlyInputClass } from '../../styles';
 
 export const DeckDetailsSubTab: React.FC = () => {
   const { additionalInputs, updateAdditionalInput } = useBridgeStore();
@@ -10,16 +10,9 @@ export const DeckDetailsSubTab: React.FC = () => {
   const footpathThickness = Number(additionalInputs['typical_section.footpath_thickness'] ?? 250.0);
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        columnGap: '32px',
-        rowGap: '12px',
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <label style={{ fontSize: '12px', color: '#000000', minWidth: '160px' }}>
+    <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+      <div className="flex items-center justify-between">
+        <label className="text-xs text-black min-w-[160px]">
           Deck Thickness (mm):
         </label>
         <input
@@ -27,36 +20,35 @@ export const DeckDetailsSubTab: React.FC = () => {
           step="1"
           value={deckThickness ? deckThickness.toFixed(2) : '250.00'}
           onChange={(e) => updateAdditionalInput('typical_section.deck_thickness', parseFloat(e.target.value))}
-          style={inputStyle}
+          className={inputClass}
         />
       </div>
 
       <div />
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <label style={{ fontSize: '12px', color: '#000000', minWidth: '160px' }}>
+      <div className="flex items-center justify-between">
+        <label className="text-xs text-black min-w-[160px]">
           Footpath Width (m):
         </label>
         <input
           type="text"
           readOnly
           value={footpathWidth ? footpathWidth.toFixed(2) : '0.00'}
-          style={readOnlyInputStyle}
+          className={readOnlyInputClass}
         />
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <label style={{ fontSize: '12px', color: '#000000', minWidth: '160px' }}>
+      <div className="flex items-center justify-between">
+        <label className="text-xs text-black min-w-[160px]">
           Footpath Thickness (mm):
         </label>
         <input
           type="text"
           readOnly
           value={footpathThickness ? footpathThickness.toFixed(2) : '250.00'}
-          style={readOnlyInputStyle}
+          className={readOnlyInputClass}
         />
       </div>
     </div>
   );
 };
-

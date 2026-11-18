@@ -5,7 +5,7 @@ import { MemberPropertiesTab } from './member-properties/MemberPropertiesTab';
 import { LoadingTab } from './loading/LoadingTab';
 import { AnalysisDesignOptionsTab } from './analysis-design-options/AnalysisDesignOptionsTab';
 import { DesignOptionsContTab } from './design-options-cont/DesignOptionsContTab';
-import { actionBtnStyle } from './styles';
+import { actionBtnClass } from './styles';
 
 type ResizeEdge =
   | 'top'
@@ -36,7 +36,6 @@ export const AdditionalInputsModal: React.FC = () => {
 
   const [activeMainTab, setActiveMainTab] = useState(0);
   const [isCloseHovered, setIsCloseHovered] = useState(false);
-  const [isClosePressed, setIsClosePressed] = useState(false);
   const [dialogSize, setDialogSize] = useState(getInitialDialogSize);
   const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
 
@@ -151,110 +150,57 @@ export const AdditionalInputsModal: React.FC = () => {
     'Typical Section Details',
     'Member Properties',
     'Loading',
-    'Analysis/Design Options',
+    'Analysis & Design Options',
     'Design Options (Cont.)',
   ];
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.45)',
-        zIndex: 9999,
-      }}
-    >
+    <div className="fixed inset-0 bg-black/25 flex items-center justify-center z-[9999]">
       <div
-        className="additional-inputs-modal"
+        className="fixed max-w-[calc(100vw-20px)] max-h-[calc(100vh-20px)] bg-white rounded-[4px] shadow-[0_8px_32px_rgba(0,0,0,0.35)] flex flex-col border-2 border-[#8cae11] overflow-hidden z-[10000]"
         style={{
-          position: 'fixed',
           left: position ? `${position.x}px` : '50%',
           top: position ? `${position.y}px` : '50%',
           transform: position ? undefined : 'translate(-50%, -50%)',
           width: `${dialogSize.width}px`,
           height: `${dialogSize.height}px`,
-          maxWidth: 'calc(100vw - 20px)',
-          maxHeight: 'calc(100vh - 20px)',
-          backgroundColor: '#ffffff',
-          borderRadius: '4px',
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.35)',
-          display: 'flex',
-          flexDirection: 'column',
-          border: '2px solid #8cae11',
-          overflow: 'hidden',
-          zIndex: 10000,
         }}
       >
         {/* Resize Handles */}
-        <div onMouseDown={(e) => handleBorderResizeStart(e, 'top')} style={{ position: 'absolute', top: 0, left: 10, right: 10, height: 6, cursor: 'ns-resize', zIndex: 100 }} />
-        <div onMouseDown={(e) => handleBorderResizeStart(e, 'bottom')} style={{ position: 'absolute', bottom: 0, left: 10, right: 10, height: 6, cursor: 'ns-resize', zIndex: 100 }} />
-        <div onMouseDown={(e) => handleBorderResizeStart(e, 'left')} style={{ position: 'absolute', left: 0, top: 10, bottom: 10, width: 6, cursor: 'ew-resize', zIndex: 100 }} />
-        <div onMouseDown={(e) => handleBorderResizeStart(e, 'right')} style={{ position: 'absolute', right: 0, top: 10, bottom: 10, width: 6, cursor: 'ew-resize', zIndex: 100 }} />
-        <div onMouseDown={(e) => handleBorderResizeStart(e, 'top-left')} style={{ position: 'absolute', top: 0, left: 0, width: 10, height: 10, cursor: 'nwse-resize', zIndex: 101 }} />
-        <div onMouseDown={(e) => handleBorderResizeStart(e, 'top-right')} style={{ position: 'absolute', top: 0, right: 0, width: 10, height: 10, cursor: 'nesw-resize', zIndex: 101 }} />
-        <div onMouseDown={(e) => handleBorderResizeStart(e, 'bottom-left')} style={{ position: 'absolute', bottom: 0, left: 0, width: 10, height: 10, cursor: 'nesw-resize', zIndex: 101 }} />
-        <div onMouseDown={(e) => handleBorderResizeStart(e, 'bottom-right')} style={{ position: 'absolute', bottom: 0, right: 0, width: 10, height: 10, cursor: 'nwse-resize', zIndex: 101 }} />
+        <div onMouseDown={(e) => handleBorderResizeStart(e, 'top')} className="absolute top-0 left-2.5 right-2.5 h-1.5 cursor-ns-resize z-[100]" />
+        <div onMouseDown={(e) => handleBorderResizeStart(e, 'bottom')} className="absolute bottom-0 left-2.5 right-2.5 h-1.5 cursor-ns-resize z-[100]" />
+        <div onMouseDown={(e) => handleBorderResizeStart(e, 'left')} className="absolute left-0 top-2.5 bottom-2.5 w-1.5 cursor-ew-resize z-[100]" />
+        <div onMouseDown={(e) => handleBorderResizeStart(e, 'right')} className="absolute right-0 top-2.5 bottom-2.5 w-1.5 cursor-ew-resize z-[100]" />
+        <div onMouseDown={(e) => handleBorderResizeStart(e, 'top-left')} className="absolute top-0 left-0 w-2.5 h-2.5 cursor-nwse-resize z-[101]" />
+        <div onMouseDown={(e) => handleBorderResizeStart(e, 'top-right')} className="absolute top-0 right-0 w-2.5 h-2.5 cursor-nesw-resize z-[101]" />
+        <div onMouseDown={(e) => handleBorderResizeStart(e, 'bottom-left')} className="absolute bottom-0 left-0 w-2.5 h-2.5 cursor-nesw-resize z-[101]" />
+        <div onMouseDown={(e) => handleBorderResizeStart(e, 'bottom-right')} className="absolute bottom-0 right-0 w-2.5 h-2.5 cursor-nwse-resize z-[101]" />
 
         {/* Modal Title Bar (Draggable) */}
         <div
           onMouseDown={handleTitleBarMouseDown}
-          style={{
-            height: '32px',
-            backgroundColor: '#ffffff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '0 0 0 10px',
-            borderBottom: '1px solid #d5d5d5',
-            userSelect: 'none',
-            position: 'relative',
-            cursor: 'move',
-          }}
+          className="h-8 bg-white flex items-center justify-between pl-2.5 border-b border-[#d5d5d5] select-none relative cursor-move"
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div className="flex items-center gap-2">
             <img
               src="/vectors/Osdag_logo.svg"
               alt="Osdag"
               width={18}
               height={18}
-              style={{ display: 'block', userSelect: 'none', pointerEvents: 'none' }}
+              className="block select-none pointer-events-none"
             />
-            <span style={{ fontSize: '12px', fontWeight: 600, color: '#333333' }}>
+            <span className="text-xs font-semibold text-[#333333]">
               Additional Inputs
             </span>
           </div>
 
-          <div style={{ position: 'relative', height: '100%', display: 'flex' }}>
+          <div className="relative h-full flex">
             <button
               type="button"
               onClick={() => setAdditionalInputsOpen(false)}
               onMouseEnter={() => setIsCloseHovered(true)}
-              onMouseLeave={() => {
-                setIsCloseHovered(false);
-                setIsClosePressed(false);
-              }}
-              onMouseDown={(e) => {
-                e.stopPropagation();
-                setIsClosePressed(true);
-              }}
-              onMouseUp={() => setIsClosePressed(false)}
-              style={{
-                width: '46px',
-                height: '32px',
-                border: 'none',
-                borderRadius: '0',
-                backgroundColor: isClosePressed ? '#c0392b' : isCloseHovered ? '#fa382f' : 'transparent',
-                color: isCloseHovered ? '#ffffff' : '#000000',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 0,
-                fontSize: '15px',
-                fontWeight: 'bold',
-                fontFamily: 'Segoe UI, Arial, sans-serif',
-                transition: 'background-color 0.1s ease',
-              }}
+              onMouseLeave={() => setIsCloseHovered(false)}
+              className="w-[46px] h-8 border-0 rounded-none bg-transparent hover:bg-[#fa382f] active:bg-[#c0392b] text-black hover:text-white cursor-pointer flex items-center justify-center p-0 text-[15px] font-bold font-sans transition-colors"
               aria-label="Close"
             >
               ✕
@@ -262,29 +208,8 @@ export const AdditionalInputsModal: React.FC = () => {
 
             {/* Tooltip matching Desktop Osdag (Green border #8cae11) */}
             {isCloseHovered && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '34px',
-                  right: '4px',
-                  backgroundColor: '#ffffff',
-                  border: '1.5px solid #8cae11',
-                  borderRadius: '2px',
-                  padding: '3px 8px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
-                  zIndex: 99999,
-                  pointerEvents: 'none',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: '12px',
-                    fontWeight: 'bold',
-                    color: '#000000',
-                    fontFamily: 'Segoe UI, Arial, sans-serif',
-                  }}
-                >
+              <div className="absolute top-[34px] right-1 bg-white border-[1.5px] border-[#8cae11] rounded-[2px] p-[3px_8px] shadow-[0_2px_8px_rgba(0,0,0,0.2)] z-[99999] pointer-events-none whitespace-nowrap">
+                <span className="text-xs font-bold text-black font-sans">
                   Close
                 </span>
               </div>
@@ -293,17 +218,7 @@ export const AdditionalInputsModal: React.FC = () => {
         </div>
 
         {/* Main Tabs Header */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            backgroundColor: '#ffffff',
-            borderBottom: '1px solid #c0c0c0',
-            padding: '8px 14px 0 14px',
-            gap: '0px',
-            flexShrink: 0,
-          }}
-        >
+        <div className="flex justify-center bg-white border-b border-[#c0c0c0] pt-2 px-3.5 gap-0 shrink-0">
           {mainTabs.map((tabLabel, idx) => {
             const isSelected = activeMainTab === idx;
             return (
@@ -311,22 +226,13 @@ export const AdditionalInputsModal: React.FC = () => {
                 key={tabLabel}
                 type="button"
                 onClick={() => setActiveMainTab(idx)}
-                style={{
-                  padding: '7px 22px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  border: '1px solid #c0c0c0',
-                  borderBottom: isSelected ? 'none' : '1px solid #c0c0c0',
-                  borderRight: idx < mainTabs.length - 1 ? 'none' : '1px solid #c0c0c0',
-                  backgroundColor: isSelected ? '#8cae11' : '#eaeaea',
-                  color: isSelected ? '#ffffff' : '#333333',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  bottom: '-1px',
-                  zIndex: isSelected ? 3 : 1,
-                  whiteSpace: 'nowrap',
-                  transition: 'background-color 0.1s',
-                }}
+                className={`px-[22px] py-[7px] text-xs font-bold border border-[#c0c0c0] relative -bottom-px whitespace-nowrap transition-colors cursor-pointer ${
+                  idx < mainTabs.length - 1 ? 'border-r-0' : ''
+                } ${
+                  isSelected
+                    ? 'bg-[#8cae11] text-white border-b-0 z-[3]'
+                    : 'bg-[#eaeaea] text-[#333333] hover:bg-[#e0e0e0] z-[1]'
+                }`}
               >
                 {tabLabel}
               </button>
@@ -335,17 +241,7 @@ export const AdditionalInputsModal: React.FC = () => {
         </div>
 
         {/* Tab Body Content */}
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: 0,
-            overflow: 'hidden',
-            backgroundColor: '#ffffff',
-            paddingTop: '6px',
-          }}
-        >
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden bg-white pt-1.5">
           {activeMainTab === 0 && <TypicalSectionDetailsTab dialogSize={dialogSize} />}
           {activeMainTab === 1 && <MemberPropertiesTab />}
           {activeMainTab === 2 && <LoadingTab />}
@@ -354,36 +250,18 @@ export const AdditionalInputsModal: React.FC = () => {
         </div>
 
         {/* Bottom Action Bar (Defaults, Save) */}
-        <div
-          style={{
-            backgroundColor: '#ededed',
-            border: '1px solid #c8c8c8',
-            borderRadius: '6px',
-            padding: '8px 16px',
-            margin: '4px 14px 10px 14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '14px',
-            flexShrink: 0,
-            position: 'relative',
-          }}
-        >
+        <div className="bg-[#ededed] border border-[#c8c8c8] rounded-[6px] p-[8px_16px] mx-3.5 mt-1 mb-2.5 flex items-center justify-center gap-3.5 shrink-0 relative">
           <button
             type="button"
             onClick={resetAdditionalDefaults}
-            style={actionBtnStyle}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f6f6f6')}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#ffffff')}
+            className={actionBtnClass}
           >
             Defaults
           </button>
           <button
             type="button"
             onClick={saveAdditionalInputs}
-            style={actionBtnStyle}
-            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f6f6f6')}
-            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#ffffff')}
+            className={actionBtnClass}
           >
             Save
           </button>

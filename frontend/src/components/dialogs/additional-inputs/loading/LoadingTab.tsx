@@ -20,28 +20,9 @@ export const LoadingTab: React.FC = () => {
   ];
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: 0,
-        margin: '0 14px 6px 14px',
-        overflow: 'hidden',
-      }}
-    >
+    <div className="flex-1 flex flex-col min-h-0 mx-3.5 mb-1.5 overflow-hidden">
       {/* Sub-tabs bar */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'stretch',
-          backgroundColor: '#2b2b2b',
-          border: '1px solid #c0c0c0',
-          borderBottom: 'none',
-          height: '32px',
-          flexShrink: 0,
-        }}
-      >
+      <div className="flex items-stretch bg-[#2b2b2b] border border-[#c0c0c0] border-b-0 h-8 shrink-0">
         {subTabs.map((tab, idx) => {
           const isSelected = activeSubTab === idx;
           const isDisabled = tab.disabled;
@@ -53,44 +34,24 @@ export const LoadingTab: React.FC = () => {
               disabled={isDisabled}
               onClick={() => !isDisabled && setActiveSubTab(idx)}
               title={tab.tooltip || tab.label}
-              style={{
-                padding: '0 16px',
-                fontSize: '11.5px',
-                fontWeight: 'bold',
-                fontFamily: 'inherit',
-                border: 'none',
-                borderRight: '1px solid #c0c0c0',
-                backgroundColor: isSelected ? '#8cae11' : '#ffffff',
-                color: isSelected ? '#ffffff' : isDisabled ? '#9e9e9e' : '#333333',
-                cursor: isDisabled ? 'not-allowed' : 'pointer',
-                whiteSpace: 'nowrap',
-                transition: 'background-color 0.1s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              className={`px-4 text-[11.5px] font-bold font-sans border-0 border-r border-[#c0c0c0] whitespace-nowrap transition-colors flex items-center justify-center select-none ${
+                isSelected
+                  ? 'bg-[#8cae11] text-white'
+                  : isDisabled
+                  ? 'bg-white text-[#9e9e9e] cursor-not-allowed'
+                  : 'bg-white text-[#333333] hover:bg-[#f0f0f0] cursor-pointer'
+              }`}
             >
               {tab.label}
             </button>
           );
         })}
         {/* Dark spacer filling the rest of the tab bar */}
-        <div style={{ flex: 1 }} />
+        <div className="flex-1" />
       </div>
 
       {/* Sub-tab content */}
-      <div
-        style={{
-          flex: 1,
-          minHeight: 0,
-          border: '1px solid #c0c0c0',
-          padding: '14px',
-          backgroundColor: '#ffffff',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-        }}
-      >
+      <div className="flex-1 min-h-0 border border-[#c0c0c0] p-3.5 bg-white flex flex-col overflow-hidden">
         {activeSubTab === 0 && <PermanentLoadSubTab />}
         {activeSubTab === 1 && <LiveLoadSubTab />}
         {activeSubTab === 2 && <SeismicLoadSubTab />}

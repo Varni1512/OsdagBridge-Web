@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBridgeStore } from '../../../../../store/useBridgeStore';
-import { inputStyle, readOnlyInputStyle } from '../../styles';
+import { inputClass, readOnlyInputClass, selectClass } from '../../styles';
 import { LoadDescriptionPanel } from './LoadDescriptionPanel';
 
 export const WindLoadSubTab: React.FC = () => {
@@ -88,17 +88,13 @@ export const WindLoadSubTab: React.FC = () => {
     const isCustom = mode === 'Custom';
 
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <label style={{ fontSize: '12px', color: '#000000' }}>{label}</label>
-        <div style={{ width: '186px', display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end' }}>
+      <div className="flex items-center justify-between">
+        <label className="text-xs text-black">{label}</label>
+        <div className="w-[186px] flex items-center gap-1.5 justify-end">
           <select
             value={mode}
             onChange={(e) => updateAdditionalInput(modeKey, e.target.value)}
-            className="osdag-select-field"
-            style={{
-              ...inputStyle,
-              width: isCustom ? '105px' : '186px',
-            }}
+            className={`${selectClass} ${isCustom ? '!w-[105px]' : '!w-[186px]'}`}
           >
             {modeChoices.map((c) => (
               <option key={c} value={c}>
@@ -113,10 +109,7 @@ export const WindLoadSubTab: React.FC = () => {
               value={val}
               onChange={(e) => updateAdditionalInput(valKey, e.target.value)}
               placeholder=""
-              style={{
-                ...inputStyle,
-                width: '75px',
-              }}
+              className={`${inputClass} !w-[75px]`}
             />
           )}
         </div>
@@ -125,60 +118,41 @@ export const WindLoadSubTab: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', gap: '16px', height: '100%', minHeight: 0 }}>
+    <div className="flex gap-4 h-full min-h-0">
       {/* Left Column */}
-      <div
-        className="card-scroll"
-        style={{
-          flex: '1.2',
-          minWidth: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          overflowY: 'auto',
-          paddingRight: '4px',
-        }}
-      >
+      <div className="card-scroll flex-[1.2] min-w-0 flex flex-col gap-3 overflow-y-auto pr-1">
         {/* Wind Load (WL) Inputs */}
-        <div
-          style={{
-            border: '1px solid #c0c0c0',
-            borderRadius: '6px',
-            padding: '12px 16px',
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000', marginBottom: '10px' }}>
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+          <div className="text-xs font-bold text-black mb-2.5">
             Wind Load (WL) Inputs
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div className="flex flex-col gap-2">
             {/* Basic Wind Speed, Vb */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <label style={{ fontSize: '12px', color: '#000000' }}>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">
                 Basic Wind Speed, V<sub>b</sub> (m/s)
               </label>
-              <input type="text" readOnly value={basicWindSpeed} style={readOnlyInputStyle} />
+              <input type="text" readOnly value={basicWindSpeed} className={readOnlyInputClass} />
             </div>
 
             {/* Average Exposed Height, H */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <label style={{ fontSize: '12px', color: '#000000' }}>Average Exposed Height, H (m)</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Average Exposed Height, H (m)</label>
               <input
                 type="text"
                 value={exposedHeight}
                 onChange={(e) => updateAdditionalInput('loading.wind_load.avg_exposed_height', e.target.value)}
-                style={inputStyle}
+                className={inputClass}
               />
             </div>
 
             {/* Type of Terrain */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <label style={{ fontSize: '12px', color: '#000000' }}>Type of Terrain</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Type of Terrain</label>
               <select
                 value={terrainType}
                 onChange={(e) => updateAdditionalInput('loading.wind_load.terrain_type', e.target.value)}
-                className="osdag-select-field"
-                style={inputStyle}
+                className={selectClass}
               >
                 <option value="Plain Terrain">Plain Terrain</option>
                 <option value="Terrain with Obstructions">Terrain with Obstructions</option>
@@ -186,13 +160,12 @@ export const WindLoadSubTab: React.FC = () => {
             </div>
 
             {/* Site Topography */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <label style={{ fontSize: '12px', color: '#000000' }}>Site Topography</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Site Topography</label>
               <select
                 value={siteTopo}
                 onChange={(e) => updateAdditionalInput('loading.wind_load.site_topography', e.target.value)}
-                className="osdag-select-field"
-                style={inputStyle}
+                className={selectClass}
               >
                 <option value="Flat">Flat</option>
                 <option value="Hill, ridge, escarpment or cliff">Hill, ridge, escarpment or cliff</option>
@@ -274,30 +247,23 @@ export const WindLoadSubTab: React.FC = () => {
         </div>
 
         {/* Computed Values */}
-        <div
-          style={{
-            border: '1px solid #c0c0c0',
-            borderRadius: '6px',
-            padding: '12px 16px',
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000', marginBottom: '10px' }}>
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+          <div className="text-xs font-bold text-black mb-2.5">
             Computed Values
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <label style={{ fontSize: '12px', color: '#000000' }}>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">
                 Hourly Mean Wind Speed, V<sub>z</sub> (m/s)
               </label>
-              <input type="text" readOnly value={vzStr} style={readOnlyInputStyle} />
+              <input type="text" readOnly value={vzStr} className={readOnlyInputClass} />
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <label style={{ fontSize: '12px', color: '#000000' }}>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">
                 Hourly Wind Pressure, P<sub>z</sub> (N/m²)
               </label>
-              <input type="text" readOnly value={pzStr} style={readOnlyInputStyle} />
+              <input type="text" readOnly value={pzStr} className={readOnlyInputClass} />
             </div>
           </div>
         </div>
@@ -305,18 +271,18 @@ export const WindLoadSubTab: React.FC = () => {
 
       {/* Right Column: Description Panel */}
       <LoadDescriptionPanel title="Wind Load (WL)">
-        <p style={{ margin: '0 0 8px 0' }}>
+        <p className="mb-2">
           Basic wind speed is auto-filled from the project location.
         </p>
-        <p style={{ margin: '0 0 8px 0' }}>
+        <p className="mb-2">
           Hourly mean wind speed (Vz) and design wind pressure (Pz) are computed from the basic wind speed, average exposed height (H), terrain type, and site topography per IRC 6.
         </p>
-        <p style={{ margin: '0 0 2px 0' }}>Wind forces computed per IRC 6 include:</p>
-        <p style={{ margin: '0 0 1px 0' }}>- Transverse wind force on the structure</p>
-        <p style={{ margin: '0 0 1px 0' }}>- Longitudinal wind force (typically 25% of transverse)</p>
-        <p style={{ margin: '0 0 1px 0' }}>- Vertical (upward) wind force on the deck</p>
-        <p style={{ margin: '0 0 8px 0' }}>- Transverse and longitudinal wind forces due to live load</p>
-        <p style={{ margin: 0 }}>
+        <p className="mb-0.5">Wind forces computed per IRC 6 include:</p>
+        <p className="mb-[1px]">- Transverse wind force on the structure</p>
+        <p className="mb-[1px]">- Longitudinal wind force (typically 25% of transverse)</p>
+        <p className="mb-[1px]">- Vertical (upward) wind force on the deck</p>
+        <p className="mb-2">- Transverse and longitudinal wind forces due to live load</p>
+        <p className="m-0">
           These forces use the gust factor (G), drag coefficient (CD), lift coefficient (CL), superstructure elevation area, plan area, and exposed frontal area of live load. They are applied at the specified eccentricity or as required by IRC 6.
         </p>
       </LoadDescriptionPanel>

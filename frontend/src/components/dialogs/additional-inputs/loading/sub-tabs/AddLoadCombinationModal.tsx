@@ -106,9 +106,12 @@ export const AddLoadCombinationModal: React.FC<AddLoadCombinationModalProps> = (
       setErrorMsg('Please select a row from the table to delete.');
       return;
     }
+
     setRows((prev) => {
-      const filtered = prev.filter((_, i) => i !== selectedRowIndex);
-      return filtered.map((r, idx) => ({ ...r, sNo: idx + 1 }));
+      const updated = prev
+        .filter((_, i) => i !== selectedRowIndex)
+        .map((r, i) => ({ ...r, sNo: i + 1 }));
+      return updated;
     });
     setSelectedRowIndex(null);
   };
@@ -117,88 +120,50 @@ export const AddLoadCombinationModal: React.FC<AddLoadCombinationModalProps> = (
     setErrorMsg('');
     const trimmedName = comboName.trim();
     if (!trimmedName) {
-      setErrorMsg('Please enter a Combination Name.');
-      return;
-    }
-    if (rows.length === 0) {
-      setErrorMsg('Please add at least one Load Case to the combination.');
+      setErrorMsg('Combination Name cannot be empty.');
       return;
     }
 
-    const expr = rows.map((r) => `${r.factor}${r.loadCase}`).join(' + ');
+    if (rows.length === 0) {
+      setErrorMsg('Please add at least one load case to the combination table.');
+      return;
+    }
+
+    // Generate expression string, e.g. "1.35DL + 1.75DW + 1.5LL"
+    const expr = rows
+      .map((r) => `${Number(r.factor).toFixed(r.factor.includes('.') ? r.factor.split('.')[1].length : 1)}${r.loadCase}`)
+      .join(' + ');
+
     onSave({ name: trimmedName, expr });
     handleClose();
   };
 
   return (
     <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.35)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 10005,
-      }}
+      className="fixed inset-0 bg-black/35 flex items-center justify-center z-[10005]"
       onClick={(e) => {
         if (e.target === e.currentTarget) handleClose();
       }}
     >
-      <div
-        style={{
-          width: '540px',
-          backgroundColor: '#ffffff',
-          borderRadius: '4px',
-          border: '1px solid #707070',
-          boxShadow: '0 10px 28px rgba(0, 0, 0, 0.3)',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-          fontFamily: 'inherit',
-        }}
-      >
+      <div className="w-[540px] bg-white rounded-[4px] border border-[#707070] shadow-[0_10px_28px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden font-sans">
         {/* Title Bar */}
-        <div
-          style={{
-            height: '32px',
-            backgroundColor: '#ffffff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '0 10px',
-            borderBottom: '2px solid #8cae11',
-            userSelect: 'none',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div className="h-8 bg-white flex items-center justify-between px-2.5 border-b-2 border-[#8cae11] select-none">
+          <div className="flex items-center gap-2">
             <img
               src="/vectors/Osdag_logo.svg"
               alt="Osdag"
               width={16}
               height={16}
-              style={{ display: 'block', pointerEvents: 'none' }}
+              className="block pointer-events-none"
             />
-            <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+            <span className="text-xs font-bold text-black">
               Add Load Combination
             </span>
           </div>
           <button
             type="button"
             onClick={handleClose}
-            style={{
-              background: 'none',
-              border: 'none',
-              fontSize: '14px',
-              fontWeight: 'bold',
-              color: '#333333',
-              cursor: 'pointer',
-              lineHeight: 1,
-              padding: '2px 6px',
-            }}
+            className="bg-transparent border-0 text-sm font-bold text-[#333333] cursor-pointer leading-none px-1.5 py-0.5 hover:text-black"
             aria-label="Close"
           >
             ✕
@@ -206,10 +171,10 @@ export const AddLoadCombinationModal: React.FC<AddLoadCombinationModalProps> = (
         </div>
 
         {/* Modal Body */}
-        <div style={{ padding: '16px 20px 16px 20px', display: 'flex', flexDirection: 'column' }}>
+        <div className="p-[16px_20px] flex flex-col">
           {/* Combination Name Row */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '14px' }}>
-            <label style={{ fontSize: '12px', color: '#000000', width: '130px' }}>
+          <div className="flex items-center gap-3.5 mb-3.5">
+            <label className="text-xs text-black w-[130px]">
               Combination Name:
             </label>
             <input
@@ -217,40 +182,17 @@ export const AddLoadCombinationModal: React.FC<AddLoadCombinationModalProps> = (
               value={comboName}
               onChange={(e) => setComboName(e.target.value)}
               placeholder=""
-              style={{
-                width: '200px',
-                height: '24px',
-                padding: '2px 8px',
-                fontSize: '12px',
-                border: '1px solid #757575',
-                borderRadius: '4px',
-                outline: 'none',
-                boxSizing: 'border-box',
-                backgroundColor: '#ffffff',
-                color: '#000000',
-              }}
+              className="w-[200px] h-6 px-2 py-0.5 text-xs border border-[#757575] rounded-[4px] outline-none box-border bg-white text-black focus:border-[#90af13]"
             />
           </div>
 
           {/* Load Case & Partial Safety Factor Row */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-            <label style={{ fontSize: '12px', color: '#000000' }}>Load Case:</label>
+          <div className="flex items-center gap-3 mb-4">
+            <label className="text-xs text-black">Load Case:</label>
             <select
               value={currentLoadCase}
               onChange={(e) => setCurrentLoadCase(e.target.value)}
-              className="osdag-select-field"
-              style={{
-                width: '78px',
-                height: '24px',
-                padding: '0 6px',
-                fontSize: '12px',
-                border: '1px solid #757575',
-                borderRadius: '4px',
-                outline: 'none',
-                boxSizing: 'border-box',
-                backgroundColor: '#ffffff',
-                color: '#000000',
-              }}
+              className="w-[78px] h-6 px-1.5 text-xs border border-[#757575] rounded-[4px] outline-none box-border bg-white text-black cursor-pointer focus:border-[#90af13]"
             >
               {LOAD_CASES.map((lc) => (
                 <option key={lc} value={lc}>
@@ -259,83 +201,31 @@ export const AddLoadCombinationModal: React.FC<AddLoadCombinationModalProps> = (
               ))}
             </select>
 
-            <label style={{ fontSize: '12px', color: '#000000', marginLeft: '12px' }}>
+            <label className="text-xs text-black ml-3">
               Partial Safety Factor:
             </label>
             <input
               type="text"
               value={currentFactor}
               onChange={(e) => setCurrentFactor(e.target.value)}
-              style={{
-                width: '90px',
-                height: '24px',
-                padding: '2px 8px',
-                fontSize: '12px',
-                border: '1px solid #757575',
-                borderRadius: '4px',
-                outline: 'none',
-                boxSizing: 'border-box',
-                backgroundColor: '#ffffff',
-                color: '#000000',
-              }}
+              className="w-[90px] h-6 px-2 py-0.5 text-xs border border-[#757575] rounded-[4px] outline-none box-border bg-white text-black focus:border-[#90af13]"
             />
           </div>
 
           {/* Table & Right Buttons Row */}
-          <div style={{ display: 'flex', gap: '14px', marginBottom: '16px' }}>
+          <div className="flex gap-3.5 mb-4">
             {/* Table Container */}
-            <div
-              style={{
-                flex: 1,
-                height: '210px',
-                border: '1px solid #c0c0c0',
-                borderRadius: '4px',
-                backgroundColor: '#ffffff',
-                overflowY: 'auto',
-                boxSizing: 'border-box',
-              }}
-            >
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11.5px' }}>
+            <div className="flex-1 h-[210px] border border-[#c0c0c0] rounded-[4px] bg-white overflow-y-auto box-border">
+              <table className="w-full border-collapse text-[11.5px]">
                 <thead>
-                  <tr style={{ backgroundColor: '#eaeaea' }}>
-                    <th
-                      style={{
-                        padding: '6px 4px',
-                        fontWeight: 600,
-                        color: '#333333',
-                        fontSize: '11px',
-                        borderBottom: '1px solid #c0c0c0',
-                        borderRight: '1px solid #c0c0c0',
-                        width: '55px',
-                        textAlign: 'center',
-                      }}
-                    >
+                  <tr className="bg-[#eaeaea]">
+                    <th className="p-[6px_4px] font-semibold text-[#333333] text-[11px] border-b border-r border-[#c0c0c0] w-[55px] text-center">
                       S.No
                     </th>
-                    <th
-                      style={{
-                        padding: '6px 4px',
-                        fontWeight: 600,
-                        color: '#333333',
-                        fontSize: '11px',
-                        borderBottom: '1px solid #c0c0c0',
-                        borderRight: '1px solid #c0c0c0',
-                        width: '140px',
-                        textAlign: 'center',
-                      }}
-                    >
+                    <th className="p-[6px_4px] font-semibold text-[#333333] text-[11px] border-b border-r border-[#c0c0c0] w-[140px] text-center">
                       Load Case
                     </th>
-                    <th
-                      style={{
-                        padding: '6px 4px',
-                        fontWeight: 600,
-                        color: '#333333',
-                        fontSize: '11px',
-                        borderBottom: '1px solid #c0c0c0',
-                        textAlign: 'center',
-                      }}
-                    >
+                    <th className="p-[6px_4px] font-semibold text-[#333333] text-[11px] border-b border-[#c0c0c0] text-center">
                       Partial Safety Factor
                     </th>
                   </tr>
@@ -347,46 +237,21 @@ export const AddLoadCombinationModal: React.FC<AddLoadCombinationModalProps> = (
                       <tr
                         key={idx}
                         onClick={() => handleRowClick(idx)}
-                        style={{
-                          backgroundColor: isSelected
-                            ? '#dbeafe'
+                        className={`cursor-pointer transition-colors ${
+                          isSelected
+                            ? 'bg-[#dbeafe]'
                             : idx % 2 === 1
-                            ? '#fcfcfc'
-                            : '#ffffff',
-                          cursor: 'pointer',
-                        }}
+                            ? 'bg-[#fcfcfc] hover:bg-[#f2f2f2]'
+                            : 'bg-white hover:bg-[#f2f2f2]'
+                        }`}
                       >
-                        <td
-                          style={{
-                            padding: '5px 4px',
-                            textAlign: 'center',
-                            borderBottom: '1px solid #e8e8e8',
-                            borderRight: '1px solid #e8e8e8',
-                            color: '#000000',
-                          }}
-                        >
+                        <td className="p-[5px_4px] text-center border-b border-r border-[#e8e8e8] text-black">
                           {row.sNo}
                         </td>
-                        <td
-                          style={{
-                            padding: '5px 4px',
-                            textAlign: 'center',
-                            borderBottom: '1px solid #e8e8e8',
-                            borderRight: '1px solid #e8e8e8',
-                            color: '#000000',
-                            fontWeight: 500,
-                          }}
-                        >
+                        <td className="p-[5px_4px] text-center border-b border-r border-[#e8e8e8] text-black font-medium">
                           {row.loadCase}
                         </td>
-                        <td
-                          style={{
-                            padding: '5px 4px',
-                            textAlign: 'center',
-                            borderBottom: '1px solid #e8e8e8',
-                            color: '#000000',
-                          }}
-                        >
+                        <td className="p-[5px_4px] text-center border-b border-[#e8e8e8] text-black">
                           {row.factor}
                         </td>
                       </tr>
@@ -397,58 +262,25 @@ export const AddLoadCombinationModal: React.FC<AddLoadCombinationModalProps> = (
             </div>
 
             {/* Side Action Buttons */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '80px' }}>
+            <div className="flex flex-col gap-2 w-20">
               <button
                 type="button"
                 onClick={handleAdd}
-                style={{
-                  height: '25px',
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #757575',
-                  borderRadius: '4px',
-                  fontSize: '11.5px',
-                  fontWeight: 500,
-                  color: '#222222',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f2f2f2')}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#ffffff')}
+                className="h-[25px] bg-white hover:bg-[#f2f2f2] border border-[#757575] rounded-[4px] text-[11.5px] font-medium text-[#222222] cursor-pointer transition-colors"
               >
                 Add
               </button>
               <button
                 type="button"
                 onClick={handleModify}
-                style={{
-                  height: '25px',
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #757575',
-                  borderRadius: '4px',
-                  fontSize: '11.5px',
-                  fontWeight: 500,
-                  color: '#222222',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f2f2f2')}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#ffffff')}
+                className="h-[25px] bg-white hover:bg-[#f2f2f2] border border-[#757575] rounded-[4px] text-[11.5px] font-medium text-[#222222] cursor-pointer transition-colors"
               >
                 Modify
               </button>
               <button
                 type="button"
                 onClick={handleDelete}
-                style={{
-                  height: '25px',
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #757575',
-                  borderRadius: '4px',
-                  fontSize: '11.5px',
-                  fontWeight: 500,
-                  color: '#222222',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#f2f2f2')}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#ffffff')}
+                className="h-[25px] bg-white hover:bg-[#f2f2f2] border border-[#757575] rounded-[4px] text-[11.5px] font-medium text-[#222222] cursor-pointer transition-colors"
               >
                 Delete
               </button>
@@ -457,55 +289,24 @@ export const AddLoadCombinationModal: React.FC<AddLoadCombinationModalProps> = (
 
           {/* Error Message */}
           {errorMsg && (
-            <div
-              style={{
-                fontSize: '11.5px',
-                color: '#d32f2f',
-                marginBottom: '10px',
-                textAlign: 'left',
-              }}
-            >
+            <div className="text-[11.5px] text-[#d32f2f] mb-2.5 text-left">
               ⚠️ {errorMsg}
             </div>
           )}
 
           {/* Bottom Dialog Buttons */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+          <div className="flex justify-end gap-3">
             <button
               type="button"
               onClick={handleClose}
-              style={{
-                width: '80px',
-                height: '26px',
-                backgroundColor: '#bfbfbf',
-                border: '1px solid #999999',
-                borderRadius: '4px',
-                color: '#000000',
-                fontSize: '12px',
-                fontWeight: 500,
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#adadad')}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#bfbfbf')}
+              className="w-20 h-[26px] bg-[#bfbfbf] hover:bg-[#adadad] border border-[#999999] rounded-[4px] text-black text-xs font-medium cursor-pointer transition-colors"
             >
               Cancel
             </button>
             <button
               type="button"
               onClick={handleSave}
-              style={{
-                width: '80px',
-                height: '26px',
-                backgroundColor: '#bfbfbf',
-                border: '1px solid #999999',
-                borderRadius: '4px',
-                color: '#000000',
-                fontSize: '12px',
-                fontWeight: 500,
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#adadad')}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#bfbfbf')}
+              className="w-20 h-[26px] bg-[#bfbfbf] hover:bg-[#adadad] border border-[#999999] rounded-[4px] text-black text-xs font-medium cursor-pointer transition-colors"
             >
               Save
             </button>
@@ -515,4 +316,3 @@ export const AddLoadCombinationModal: React.FC<AddLoadCombinationModalProps> = (
     </div>
   );
 };
-

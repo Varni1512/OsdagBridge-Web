@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBridgeStore } from '../../../../store/useBridgeStore';
-import { inputStyle } from '../styles';
+import { inputClass, selectClass } from '../styles';
 import { LoadDescriptionPanel } from '../loading/sub-tabs/LoadDescriptionPanel';
 import { OsdagCheckbox } from '../OsdagCheckbox';
 
@@ -58,52 +58,6 @@ export const DesignOptionsContTab: React.FC = () => {
   const isSLS_Crack =
     additionalInputs['design_options_cont.limit_states.crack_width'] ?? true;
 
-  const cardStyle: React.CSSProperties = {
-    border: '1px solid #c0c0c0',
-    borderRadius: '6px',
-    padding: '12px 16px',
-    backgroundColor: '#ffffff',
-  };
-
-  const cardTitleStyle: React.CSSProperties = {
-    fontSize: '12px',
-    fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: '10px',
-  };
-
-  const rowStyle: React.CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  };
-
-  const labelStyle: React.CSSProperties = {
-    fontSize: '12px',
-    color: '#000000',
-  };
-
-  const fieldStyle: React.CSSProperties = {
-    ...inputStyle,
-    width: '186px',
-  };
-
-  const fieldsetStyle: React.CSSProperties = {
-    border: '1px solid #757575',
-    borderRadius: '6px',
-    padding: '8px 14px 12px 14px',
-    flex: 1,
-    minWidth: 0,
-    backgroundColor: '#ffffff',
-  };
-
-  const legendStyle: React.CSSProperties = {
-    fontSize: '11.5px',
-    fontWeight: 'bold',
-    color: '#000000',
-    padding: '0 6px',
-  };
-
   const renderCheckboxRow = (
     label: string,
     key: string,
@@ -112,62 +66,27 @@ export const DesignOptionsContTab: React.FC = () => {
   ) => (
     <div
       onClick={onToggle}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        padding: '3px 0',
-        cursor: 'pointer',
-      }}
+      className="flex items-center gap-2 py-[3px] cursor-pointer"
     >
       <OsdagCheckbox checked={Boolean(val)} onChange={onToggle} ariaLabel={label} />
-      <span
-        style={{
-          fontSize: '11.5px',
-          color: '#000000',
-          userSelect: 'none',
-          fontFamily: 'inherit',
-        }}
-      >
+      <span className="text-[11.5px] text-black select-none font-sans">
         {label}
       </span>
     </div>
   );
 
   return (
-    <div
-      className="hide-scrollbar"
-      style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: 0,
-        height: '100%',
-        margin: '0 14px 6px 14px',
-        overflowY: 'auto',
-        scrollbarWidth: 'none',
-        msOverflowStyle: 'none',
-        paddingBottom: '8px',
-      }}
-    >
+    <div className="hide-scrollbar flex-1 flex flex-col min-h-0 h-full mx-3.5 mb-1.5 overflow-y-auto pb-2">
       {/* Top Section: Left cards + Right Description Panel */}
-      <div style={{ display: 'flex', gap: '16px', minHeight: 0, flexShrink: 0 }}>
+      <div className="flex gap-4 min-h-0 shrink-0">
         {/* Left Column (Cards) */}
-        <div
-          style={{
-            flex: '1.2',
-            minWidth: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '12px',
-          }}
-        >
+        <div className="flex-[1.2] min-w-0 flex flex-col gap-3">
           {/* Card 1: Partial Factor */}
-          <div style={cardStyle}>
-            <div style={cardTitleStyle}>Partial Factor</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <div style={rowStyle}>
-                <label style={labelStyle}>
+          <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+            <div className="text-xs font-bold text-black mb-2.5">Partial Factor</div>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-black">
                   Concrete basic & seismic, γ<sub>c</sub>
                 </label>
                 <input
@@ -179,12 +98,12 @@ export const DesignOptionsContTab: React.FC = () => {
                       e.target.value
                     )
                   }
-                  style={fieldStyle}
+                  className={inputClass}
                 />
               </div>
 
-              <div style={rowStyle}>
-                <label style={labelStyle}>
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-black">
                   Concrete Accidental, γ<sub>c</sub>
                 </label>
                 <input
@@ -196,12 +115,12 @@ export const DesignOptionsContTab: React.FC = () => {
                       e.target.value
                     )
                   }
-                  style={fieldStyle}
+                  className={inputClass}
                 />
               </div>
 
-              <div style={rowStyle}>
-                <label style={labelStyle}>
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-black">
                   Structural steel for Yielding and Buckling, γ<sub>M0</sub>
                 </label>
                 <input
@@ -213,12 +132,12 @@ export const DesignOptionsContTab: React.FC = () => {
                       e.target.value
                     )
                   }
-                  style={fieldStyle}
+                  className={inputClass}
                 />
               </div>
 
-              <div style={rowStyle}>
-                <label style={labelStyle}>
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-black">
                   Structural Steel For Ultimate Stress, γ<sub>M1</sub>
                 </label>
                 <input
@@ -230,12 +149,12 @@ export const DesignOptionsContTab: React.FC = () => {
                       e.target.value
                     )
                   }
-                  style={fieldStyle}
+                  className={inputClass}
                 />
               </div>
 
-              <div style={rowStyle}>
-                <label style={labelStyle}>
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-black">
                   Reinforcing Steel, γ<sub>s</sub>
                 </label>
                 <input
@@ -247,12 +166,12 @@ export const DesignOptionsContTab: React.FC = () => {
                       e.target.value
                     )
                   }
-                  style={fieldStyle}
+                  className={inputClass}
                 />
               </div>
 
-              <div style={rowStyle}>
-                <label style={labelStyle}>
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-black">
                   Shear Connectors For Yield, γ<sub>v</sub>
                 </label>
                 <input
@@ -264,12 +183,12 @@ export const DesignOptionsContTab: React.FC = () => {
                       e.target.value
                     )
                   }
-                  style={fieldStyle}
+                  className={inputClass}
                 />
               </div>
 
-              <div style={rowStyle}>
-                <label style={labelStyle}>
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-black">
                   Fatigue Load, γ<sub>Ff</sub>
                 </label>
                 <input
@@ -281,12 +200,12 @@ export const DesignOptionsContTab: React.FC = () => {
                       e.target.value
                     )
                   }
-                  style={fieldStyle}
+                  className={inputClass}
                 />
               </div>
 
-              <div style={rowStyle}>
-                <label style={labelStyle}>
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-black">
                   Fatigue Strength, γ<sub>Mf, f</sub>
                 </label>
                 <input
@@ -298,17 +217,17 @@ export const DesignOptionsContTab: React.FC = () => {
                       e.target.value
                     )
                   }
-                  style={fieldStyle}
+                  className={inputClass}
                 />
               </div>
             </div>
           </div>
 
           {/* Card 2: Resistance to Fatigue */}
-          <div style={cardStyle}>
-            <div style={cardTitleStyle}>Resistance to Fatigue</div>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Number of Load Cycles</label>
+          <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+            <div className="text-xs font-bold text-black mb-2.5">Resistance to Fatigue</div>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Number of Load Cycles</label>
               <input
                 type="text"
                 value={loadCycles}
@@ -318,25 +237,17 @@ export const DesignOptionsContTab: React.FC = () => {
                     e.target.value
                   )
                 }
-                style={fieldStyle}
+                className={inputClass}
               />
             </div>
           </div>
 
           {/* Card 3: Deflection Control */}
-          <div style={cardStyle}>
-            <div style={cardTitleStyle}>Deflection Control</div>
-            <div style={rowStyle}>
-              <label style={labelStyle}>Camber (mm)</label>
-              <div
-                style={{
-                  width: '186px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  justifyContent: 'flex-end',
-                }}
-              >
+          <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+            <div className="text-xs font-bold text-black mb-2.5">Deflection Control</div>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">Camber (mm)</label>
+              <div className="w-[186px] flex items-center gap-1.5 justify-end">
                 <select
                   value={camberMode}
                   onChange={(e) =>
@@ -345,11 +256,7 @@ export const DesignOptionsContTab: React.FC = () => {
                       e.target.value
                     )
                   }
-                  className="osdag-select-field"
-                  style={{
-                    ...inputStyle,
-                    width: camberMode === 'Custom' ? '105px' : '186px',
-                  }}
+                  className={`${selectClass} ${camberMode === 'Custom' ? '!w-[105px]' : '!w-[186px]'}`}
                 >
                   <option value="Default">Default</option>
                   <option value="Custom">Custom</option>
@@ -366,10 +273,7 @@ export const DesignOptionsContTab: React.FC = () => {
                       )
                     }
                     placeholder="0 - 4000"
-                    style={{
-                      ...inputStyle,
-                      width: '75px',
-                    }}
+                    className={`${inputClass} !w-[75px]`}
                   />
                 )}
               </div>
@@ -379,43 +283,36 @@ export const DesignOptionsContTab: React.FC = () => {
 
         {/* Right Column (Description Panel) */}
         <LoadDescriptionPanel title="Design Options">
-          <p style={{ margin: '0 0 10px 0' }}>
+          <p className="mb-2.5">
             Default values for partial factors are per IRC 22, and the default number of
             fatigue load cycles is per IRC 6.
           </p>
-          <p style={{ margin: '0 0 10px 0' }}>
+          <p className="mb-2.5">
             Deflection limits per IRC 6: L/800 for live load alone, L/600 for DL+LL.
           </p>
-          <p style={{ margin: '0 0 2px 0' }}>Camber operates in two modes:</p>
-          <p style={{ margin: '0 0 4px 0' }}>
+          <p className="mb-0.5">Camber operates in two modes:</p>
+          <p className="mb-1">
             • Default — camber equals the dead load deflection, where DL comprises
             self-weight (SW), dead load on steel (DC), deck dead load (DD), and
             superimposed dead load (SIDL), excluding the wearing surface (DW).
           </p>
-          <p style={{ margin: 0 }}>
+          <p className="m-0">
             • Custom — the user specifies the camber value directly.
           </p>
         </LoadDescriptionPanel>
       </div>
 
       {/* Bottom Section: Limit States */}
-      <div style={{ marginTop: '14px', flexShrink: 0 }}>
-        <div
-          style={{
-            fontSize: '12px',
-            fontWeight: 'bold',
-            color: '#000000',
-            marginBottom: '8px',
-          }}
-        >
+      <div className="mt-3.5 shrink-0">
+        <div className="text-xs font-bold text-black mb-2">
           Limit States
         </div>
 
-        <div style={{ display: 'flex', gap: '16px' }}>
+        <div className="flex gap-4">
           {/* Group 1: Ultimate Limit States */}
-          <fieldset style={fieldsetStyle}>
-            <legend style={legendStyle}>Ultimate Limit States</legend>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          <fieldset className="border border-[#757575] rounded-[6px] p-[8px_14px_12px_14px] flex-1 min-w-0 bg-white">
+            <legend className="text-[11.5px] font-bold text-black px-1.5">Ultimate Limit States</legend>
+            <div className="flex flex-col gap-0.5">
               {renderCheckboxRow(
                 'Bending Resistance',
                 'design_options_cont.limit_states.bending_resistance',
@@ -480,9 +377,9 @@ export const DesignOptionsContTab: React.FC = () => {
           </fieldset>
 
           {/* Group 2: Serviceability Limit States */}
-          <fieldset style={fieldsetStyle}>
-            <legend style={legendStyle}>Serviceability Limit States</legend>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          <fieldset className="border border-[#757575] rounded-[6px] p-[8px_14px_12px_14px] flex-1 min-w-0 bg-white">
+            <legend className="text-[11.5px] font-bold text-black px-1.5">Serviceability Limit States</legend>
+            <div className="flex flex-col gap-0.5">
               {renderCheckboxRow(
                 'Stress Limitation',
                 'design_options_cont.limit_states.stress_limitation',

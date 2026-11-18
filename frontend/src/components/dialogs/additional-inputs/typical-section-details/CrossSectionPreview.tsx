@@ -107,47 +107,14 @@ export const CrossSectionPreview: React.FC<CrossSectionPreviewProps> = () => {
   const bottomDimY2 = 372; // Overall Bridge Width
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#ffffff',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
+    <div className="w-full h-full bg-white relative overflow-hidden">
       {/* Zoom / View controls (Top-Right, Fixed above scroll area) */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '10px',
-          right: '18px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '3px',
-          zIndex: 30,
-        }}
-      >
+      <div className="absolute top-2.5 right-4.5 flex flex-col gap-[3px] z-30">
         <button
           type="button"
           onClick={handleZoomIn}
           title="Zoom In"
-          style={{
-            width: '22px',
-            height: '22px',
-            backgroundColor: '#ffffff',
-            border: '1px solid #999999',
-            borderRadius: '2px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 0,
-            fontSize: '14px',
-            fontWeight: 'bold',
-            color: '#333333',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-          }}
+          className="w-[22px] h-[22px] bg-white border border-[#999999] rounded-[2px] cursor-pointer flex items-center justify-center p-0 text-sm font-bold text-[#333333] shadow-[0_1px_3px_rgba(0,0,0,0.15)] hover:bg-[#f2f2f2]"
         >
           +
         </button>
@@ -155,22 +122,7 @@ export const CrossSectionPreview: React.FC<CrossSectionPreviewProps> = () => {
           type="button"
           onClick={handleZoomOut}
           title="Zoom Out"
-          style={{
-            width: '22px',
-            height: '22px',
-            backgroundColor: '#ffffff',
-            border: '1px solid #999999',
-            borderRadius: '2px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 0,
-            fontSize: '14px',
-            fontWeight: 'bold',
-            color: '#333333',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-          }}
+          className="w-[22px] h-[22px] bg-white border border-[#999999] rounded-[2px] cursor-pointer flex items-center justify-center p-0 text-sm font-bold text-[#333333] shadow-[0_1px_3px_rgba(0,0,0,0.15)] hover:bg-[#f2f2f2]"
         >
           -
         </button>
@@ -178,66 +130,27 @@ export const CrossSectionPreview: React.FC<CrossSectionPreviewProps> = () => {
           type="button"
           onClick={handleResetZoom}
           title="Fit to Screen"
-          style={{
-            width: '22px',
-            height: '22px',
-            backgroundColor: '#ffffff',
-            border: '1px solid #999999',
-            borderRadius: '2px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 0,
-            boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-          }}
+          className="w-[22px] h-[22px] bg-white border border-[#999999] rounded-[2px] cursor-pointer flex items-center justify-center p-0 shadow-[0_1px_3px_rgba(0,0,0,0.15)] hover:bg-[#f2f2f2]"
         >
-          <div
-            style={{
-              width: '10px',
-              height: '10px',
-              border: '2px solid #333333',
-              borderRadius: '1px',
-            }}
-          />
+          <div className="w-2.5 h-2.5 border-2 border-[#333333] rounded-[1px]" />
         </button>
       </div>
 
       {/* Scrollable Container with Native Scrollbar & Trackpad Scrolling (No trackpad zoom) */}
       <div
         ref={scrollRef}
-        className="card-scroll"
-        style={{
-          width: '100%',
-          height: '100%',
-          overflowY: 'scroll',
-          overflowX: 'auto',
-          backgroundColor: '#ffffff',
-          position: 'relative',
-        }}
+        className="card-scroll w-full h-full overflow-y-scroll overflow-x-auto bg-white relative"
       >
         <div
-          style={{
-            minWidth: '960px',
-            width: '100%',
-            height: `${390 * zoom}px`,
-            minHeight: '390px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '10px 0',
-            boxSizing: 'border-box',
-          }}
+          className="min-w-[960px] w-full min-h-[390px] flex items-center justify-center py-2.5 box-border"
+          style={{ height: `${390 * zoom}px` }}
         >
           {/* Cross section SVG Canvas (Large, Crisp, Legible) */}
           <svg
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-            style={{
-              width: `${960 * zoom}px`,
-              height: `${390 * zoom}px`,
-              display: 'block',
-              margin: '0 auto',
-            }}
+            width={960 * zoom}
+            height={390 * zoom}
+            className="block mx-auto"
           >
             <defs>
               {/* Concrete hatch pattern with aggregates (realistic Desktop Osdag texture) */}

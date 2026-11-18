@@ -1,12 +1,8 @@
 import React from 'react';
 import { useBridgeStore } from '../../../../../store/useBridgeStore';
-import { inputStyle, readOnlyInputStyle } from '../../styles';
+import { inputClass, readOnlyInputClass, selectClass } from '../../styles';
 
-interface WearingCourseSubTabProps {
-  railingOffset: number;
-}
-
-export const WearingCourseSubTab: React.FC<WearingCourseSubTabProps> = ({ railingOffset }) => {
+export const WearingCourseSubTab: React.FC = () => {
   const { additionalInputs, updateAdditionalInput } = useBridgeStore();
 
   const wcMaterial = additionalInputs['typical_section.wearing_course.material'] ?? 'Concrete';
@@ -24,23 +20,18 @@ export const WearingCourseSubTab: React.FC<WearingCourseSubTabProps> = ({ railin
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '4px' }}>
+    <div className="flex flex-col gap-2 pt-1">
       {/* Material */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-          <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+      <div className="flex items-center">
+        <div className="w-[200px] shrink-0">
+          <label className="text-xs font-bold text-black">
             Material:
           </label>
         </div>
         <select
           value={wcMaterial}
           onChange={(e) => handleWcMaterialChange(e.target.value)}
-          className="osdag-select-field"
-          style={{
-            ...inputStyle,
-            cursor: 'pointer',
-            outline: 'none',
-          }}
+          className={selectClass}
         >
           <option value="Concrete">Concrete</option>
           <option value="Bituminous">Bituminous</option>
@@ -49,9 +40,9 @@ export const WearingCourseSubTab: React.FC<WearingCourseSubTabProps> = ({ railin
       </div>
 
       {/* Density (kN/m³) */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-          <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+      <div className="flex items-center">
+        <div className="w-[200px] shrink-0">
+          <label className="text-xs font-bold text-black">
             Density (kN/m³):
           </label>
         </div>
@@ -61,14 +52,14 @@ export const WearingCourseSubTab: React.FC<WearingCourseSubTabProps> = ({ railin
           readOnly={!isWcCustom}
           value={isWcCustom ? wcDensity : (wcMaterial === 'Bituminous' ? '24.0' : '25.0')}
           onChange={(e) => updateAdditionalInput('typical_section.wearing_course.density', parseFloat(e.target.value))}
-          style={isWcCustom ? inputStyle : readOnlyInputStyle}
+          className={isWcCustom ? inputClass : readOnlyInputClass}
         />
       </div>
 
       {/* Thickness (mm) */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-          <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+      <div className="flex items-center">
+        <div className="w-[200px] shrink-0">
+          <label className="text-xs font-bold text-black">
             Thickness (mm):
           </label>
         </div>
@@ -77,10 +68,9 @@ export const WearingCourseSubTab: React.FC<WearingCourseSubTabProps> = ({ railin
           step="1"
           value={Number(wcThickness).toFixed(2)}
           onChange={(e) => updateAdditionalInput('typical_section.wearing_course.thickness', parseFloat(e.target.value))}
-          style={inputStyle}
+          className={inputClass}
         />
       </div>
     </div>
   );
 };
-

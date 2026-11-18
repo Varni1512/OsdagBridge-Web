@@ -6,7 +6,7 @@ import { CrashBarrierSubTab } from './sub-tabs/CrashBarrierSubTab';
 import { MedianSubTab } from './sub-tabs/MedianSubTab';
 import { RailingSubTab } from './sub-tabs/RailingSubTab';
 import { WearingCourseSubTab } from './sub-tabs/WearingCourseSubTab';
-import { inputStyle, readOnlyInputStyle } from '../styles';
+import { inputClass, readOnlyInputClass } from '../styles';
 
 interface TypicalSectionDetailsTabProps {
   dialogSize: { width: number; height: number };
@@ -94,59 +94,22 @@ export const TypicalSectionDetailsTab: React.FC<TypicalSectionDetailsTabProps> =
   };
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: 0,
-        overflow: 'hidden',
-      }}
-    >
+    <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
       {/* CAD Cross-Section Graphic Preview */}
-      <div
-        style={{
-          margin: '0 14px 6px 14px',
-          border: '1px solid #c0c0c0',
-          borderRadius: '6px',
-          flex: 1,
-          minHeight: '200px',
-          backgroundColor: '#ffffff',
-          overflow: 'hidden',
-          position: 'relative',
-          zIndex: 1,
-        }}
-      >
+      <div className="mx-3.5 mb-1.5 border border-[#c0c0c0] rounded-[6px] flex-1 min-h-[200px] bg-white overflow-hidden relative z-[1]">
         <CrossSectionPreview />
       </div>
 
       {/* Inputs Group Box */}
-      <div
-        className="card-scroll"
-        style={{
-          margin: '4px 14px 6px 14px',
-          border: '1px solid #c0c0c0',
-          borderRadius: '6px',
-          padding: '10px 16px 12px 16px',
-          backgroundColor: '#ffffff',
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000', marginBottom: '8px' }}>
+      <div className="card-scroll mx-3.5 mt-1 mb-1.5 border border-[#c0c0c0] rounded-[6px] p-[10px_16px_12px_16px] bg-white shrink-0">
+        <div className="text-xs font-bold text-black mb-2">
           Inputs:
         </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            columnGap: '32px',
-            rowGap: '8px',
-          }}
-        >
+        <div className="grid grid-cols-2 gap-x-8 gap-y-2">
           {/* No. of Girders */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <label style={{ fontSize: '12px', color: '#000000', minWidth: '160px' }}>
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-black min-w-[160px]">
               No. of Girders:
             </label>
             <input
@@ -155,13 +118,13 @@ export const TypicalSectionDetailsTab: React.FC<TypicalSectionDetailsTabProps> =
               step="1"
               value={numGirders || ''}
               onChange={(e) => handleGirderChange(e.target.value)}
-              style={inputStyle}
+              className={inputClass}
             />
           </div>
 
           {/* Girder Spacing */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <label style={{ fontSize: '12px', color: '#000000', minWidth: '160px' }}>
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-black min-w-[160px]">
               Girder Spacing (m):
             </label>
             <input
@@ -169,33 +132,33 @@ export const TypicalSectionDetailsTab: React.FC<TypicalSectionDetailsTabProps> =
               step="0.01"
               value={girderSpacing ? girderSpacing.toFixed(2) : ''}
               onChange={(e) => handleSpacingChange(e.target.value)}
-              style={inputStyle}
+              className={inputClass}
             />
           </div>
 
           {/* Deck Overhang Width */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <label style={{ fontSize: '12px', color: '#000000', minWidth: '160px' }}>
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-black min-w-[160px]">
               Deck Overhang Width (m):
             </label>
             <input
               type="text"
               readOnly
               value={deckOverhang ? deckOverhang.toFixed(2) : ''}
-              style={readOnlyInputStyle}
+              className={readOnlyInputClass}
             />
           </div>
 
           {/* Overall Bridge Width */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <label style={{ fontSize: '12px', color: '#000000', minWidth: '160px' }}>
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-black min-w-[160px]">
               Overall Bridge Width (m):
             </label>
             <input
               type="text"
               readOnly
               value={overallBridgeWidth ? overallBridgeWidth.toFixed(2) : ''}
-              style={readOnlyInputStyle}
+              className={readOnlyInputClass}
             />
           </div>
 
@@ -203,23 +166,8 @@ export const TypicalSectionDetailsTab: React.FC<TypicalSectionDetailsTabProps> =
           {adjustmentMessage && (
             <>
               <div />
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  marginTop: '-2px',
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: '10px',
-                    fontStyle: 'italic',
-                    color: '#000000',
-                    whiteSpace: 'nowrap',
-                    textAlign: 'right',
-                    lineHeight: 1.2,
-                  }}
-                >
+              <div className="flex justify-end -mt-0.5">
+                <div className="text-[10px] italic text-black whitespace-nowrap text-right leading-tight">
                   {adjustmentMessage}
                 </div>
               </div>
@@ -228,29 +176,8 @@ export const TypicalSectionDetailsTab: React.FC<TypicalSectionDetailsTabProps> =
         </div>
 
         {/* Sub-Tabs Bar */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-            width: '100%',
-            marginTop: '16px',
-            position: 'relative',
-            zIndex: 2,
-            marginBottom: '-1px',
-          }}
-        >
-          <div
-            style={{
-              display: 'inline-flex',
-              backgroundColor: '#eaeaea',
-              border: '1px solid #c0c0c0',
-              borderBottom: 'none',
-              overflow: 'hidden',
-              position: 'relative',
-              zIndex: 2,
-            }}
-          >
+        <div className="flex items-end justify-center w-full mt-4 relative z-[2] -mb-px">
+          <div className="inline-flex bg-[#eaeaea] border border-[#c0c0c0] border-b-0 overflow-hidden relative z-[2]">
             {typicalSubTabs.map((st, idx) => {
               const isSelected = activeSubTab === idx;
               const isDisabled = st.disabled;
@@ -261,20 +188,15 @@ export const TypicalSectionDetailsTab: React.FC<TypicalSectionDetailsTabProps> =
                   type="button"
                   disabled={isDisabled}
                   onClick={() => !isDisabled && setActiveSubTab(idx)}
-                  style={{
-                    padding: '6px 18px',
-                    fontSize: '12px',
-                    fontWeight: 'bold',
-                    border: 'none',
-                    borderRight: idx < typicalSubTabs.length - 1 ? '1px solid #c0c0c0' : 'none',
-                    borderBottom: isSelected ? 'none' : '1px solid #c0c0c0',
-                    backgroundColor: isSelected ? '#8cae11' : isDisabled ? '#f2f2f2' : '#eaeaea',
-                    color: isSelected ? '#ffffff' : isDisabled ? '#a8a8a8' : '#333333',
-                    cursor: isDisabled ? 'not-allowed' : 'pointer',
-                    textAlign: 'center',
-                    whiteSpace: 'nowrap',
-                    transition: 'background-color 0.1s',
-                  }}
+                  className={`px-[18px] py-1.5 text-xs font-bold border-0 text-center whitespace-nowrap transition-colors ${
+                    idx < typicalSubTabs.length - 1 ? 'border-r border-[#c0c0c0]' : ''
+                  } ${
+                    isSelected
+                      ? 'bg-[#8cae11] text-white border-b-0'
+                      : isDisabled
+                      ? 'bg-[#f2f2f2] text-[#a8a8a8] border-b border-[#c0c0c0] cursor-not-allowed'
+                      : 'bg-[#eaeaea] text-[#333333] border-b border-[#c0c0c0] hover:bg-[#e0e0e0] cursor-pointer'
+                  }`}
                 >
                   {st.label}
                 </button>
@@ -286,24 +208,15 @@ export const TypicalSectionDetailsTab: React.FC<TypicalSectionDetailsTabProps> =
         {/* Sub-Tab Inner Card */}
         <div
           ref={cardRef}
-          style={{
-            border: '1px solid #c0c0c0',
-            borderRadius: '6px',
-            padding: '12px 18px',
-            marginTop: '0px',
-            backgroundColor: '#ffffff',
-            position: 'relative',
-            zIndex: 1,
-          }}
+          className="border border-[#c0c0c0] rounded-[6px] p-[12px_18px] mt-0 bg-white relative z-[1]"
         >
           {activeSubTab === 0 && <DeckDetailsSubTab />}
-          {activeSubTab === 1 && <CrashBarrierSubTab railingOffset={railingOffset} />}
+          {activeSubTab === 1 && <CrashBarrierSubTab />}
           {activeSubTab === 2 && <MedianSubTab />}
           {activeSubTab === 3 && <RailingSubTab />}
-          {activeSubTab === 4 && <WearingCourseSubTab railingOffset={railingOffset} />}
+          {activeSubTab === 4 && <WearingCourseSubTab />}
         </div>
       </div>
     </div>
   );
 };
-

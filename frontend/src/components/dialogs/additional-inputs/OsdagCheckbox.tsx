@@ -25,25 +25,7 @@ export const OsdagCheckbox: React.FC<OsdagCheckboxProps> = ({ checked, onChange,
           onChange(!checked);
         }
       }}
-      style={{
-        width: '15px',
-        height: '15px',
-        minWidth: '15px',
-        minHeight: '15px',
-        backgroundColor: '#ffffff',
-        border: '1px solid #757575',
-        borderRadius: '2px',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'pointer',
-        boxSizing: 'border-box',
-        userSelect: 'none',
-        flexShrink: 0,
-        transition: 'border-color 0.1s ease',
-      }}
-      onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#333333')}
-      onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = '#757575')}
+      className="w-[15px] h-[15px] min-w-[15px] min-h-[15px] bg-white border border-[#757575] hover:border-[#333333] rounded-[2px] inline-flex items-center justify-center cursor-pointer box-border select-none shrink-0 transition-colors"
     >
       {checked && (
         <svg
@@ -51,7 +33,7 @@ export const OsdagCheckbox: React.FC<OsdagCheckboxProps> = ({ checked, onChange,
           height="11"
           viewBox="0 0 11 11"
           fill="none"
-          style={{ display: 'block' }}
+          className="block"
         >
           <path
             d="M2 5.8L4.4 8.5L9.2 2.5"
@@ -65,4 +47,3 @@ export const OsdagCheckbox: React.FC<OsdagCheckboxProps> = ({ checked, onChange,
     </div>
   );
 };
-

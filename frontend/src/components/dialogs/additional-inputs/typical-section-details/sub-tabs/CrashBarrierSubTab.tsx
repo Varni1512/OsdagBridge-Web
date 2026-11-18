@@ -1,12 +1,8 @@
 import React from 'react';
 import { useBridgeStore } from '../../../../../store/useBridgeStore';
-import { inputStyle, readOnlyInputStyle } from '../../styles';
+import { inputClass, readOnlyInputClass, selectClass } from '../../styles';
 
-interface CrashBarrierSubTabProps {
-  railingOffset: number;
-}
-
-export const CrashBarrierSubTab: React.FC<CrashBarrierSubTabProps> = ({ railingOffset }) => {
+export const CrashBarrierSubTab: React.FC = () => {
   const { additionalInputs, updateAdditionalInput } = useBridgeStore();
 
   const cbType = additionalInputs['typical_section.crash_barrier.type'] ?? 'IRC 5 - RCC Crash Barrier';
@@ -64,23 +60,18 @@ export const CrashBarrierSubTab: React.FC<CrashBarrierSubTabProps> = ({ railingO
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '4px' }}>
+    <div className="flex flex-col gap-2 pt-1">
       {/* Type */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-          <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+      <div className="flex items-center">
+        <div className="w-[200px] shrink-0">
+          <label className="text-xs font-bold text-black">
             Type:
           </label>
         </div>
         <select
           value={cbType}
           onChange={(e) => handleCbTypeChange(e.target.value)}
-          className="osdag-select-field"
-          style={{
-            ...inputStyle,
-            cursor: 'pointer',
-            outline: 'none',
-          }}
+          className={selectClass}
         >
           <option value="IRC 5 - RCC Crash Barrier">IRC 5 - RCC Crash Barrier</option>
           <option value="IRC 5 - High Containment RCC Crash Barrier">IRC 5 - High Containment RCC Crash Barrier</option>
@@ -92,9 +83,9 @@ export const CrashBarrierSubTab: React.FC<CrashBarrierSubTabProps> = ({ railingO
 
       {/* Material Density (kN/m³) */}
       {!isMetallic && (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-            <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+        <div className="flex items-center">
+          <div className="w-[200px] shrink-0">
+            <label className="text-xs font-bold text-black">
               Material Density (kN/m³):
             </label>
           </div>
@@ -103,15 +94,15 @@ export const CrashBarrierSubTab: React.FC<CrashBarrierSubTabProps> = ({ railingO
             readOnly={!isCustom}
             value={isCustom ? (cbDensity ?? 25) : '25.0'}
             onChange={(e) => updateAdditionalInput('typical_section.crash_barrier.density', parseFloat(e.target.value))}
-            style={isCustom ? inputStyle : readOnlyInputStyle}
+            className={isCustom ? inputClass : readOnlyInputClass}
           />
         </div>
       )}
 
       {/* Width (m) */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-          <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+      <div className="flex items-center">
+        <div className="w-[200px] shrink-0">
+          <label className="text-xs font-bold text-black">
             Width (m):
           </label>
         </div>
@@ -121,14 +112,14 @@ export const CrashBarrierSubTab: React.FC<CrashBarrierSubTabProps> = ({ railingO
           readOnly={!isCustom}
           value={isCustom ? (cbWidth ?? 0.45) : (cbType === 'IRC 5 - High Containment RCC Crash Barrier' ? '0.550' : '0.450')}
           onChange={(e) => updateAdditionalInput('typical_section.crash_barrier.width', parseFloat(e.target.value))}
-          style={isCustom ? inputStyle : readOnlyInputStyle}
+          className={isCustom ? inputClass : readOnlyInputClass}
         />
       </div>
 
       {/* Height (m) */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-          <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+      <div className="flex items-center">
+        <div className="w-[200px] shrink-0">
+          <label className="text-xs font-bold text-black">
             Height (m):
           </label>
         </div>
@@ -138,15 +129,15 @@ export const CrashBarrierSubTab: React.FC<CrashBarrierSubTabProps> = ({ railingO
           readOnly={!isCustom}
           value={isCustom ? (cbHeight ?? 1.10) : (cbType === 'IRC 5 - High Containment RCC Crash Barrier' ? '1.550' : '1.100')}
           onChange={(e) => updateAdditionalInput('typical_section.crash_barrier.height', parseFloat(e.target.value))}
-          style={isCustom ? inputStyle : readOnlyInputStyle}
+          className={isCustom ? inputClass : readOnlyInputClass}
         />
       </div>
 
       {/* Area (m²) */}
       {!isMetallic && (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-            <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+        <div className="flex items-center">
+          <div className="w-[200px] shrink-0">
+            <label className="text-xs font-bold text-black">
               Area (m²):
             </label>
           </div>
@@ -164,15 +155,15 @@ export const CrashBarrierSubTab: React.FC<CrashBarrierSubTabProps> = ({ railingO
                 : Number(cbArea).toFixed(4)
             }
             onChange={(e) => updateAdditionalInput('typical_section.crash_barrier.area', parseFloat(e.target.value))}
-            style={isCustom ? inputStyle : readOnlyInputStyle}
+            className={isCustom ? inputClass : readOnlyInputClass}
           />
         </div>
       )}
 
       {/* Load (kN/m) */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-          <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+      <div className="flex items-center">
+        <div className="w-[200px] shrink-0">
+          <label className="text-xs font-bold text-black">
             Load (kN/m):
           </label>
         </div>
@@ -190,15 +181,15 @@ export const CrashBarrierSubTab: React.FC<CrashBarrierSubTabProps> = ({ railingO
               : Number(cbLoad).toFixed(2)
           }
           onChange={(e) => updateAdditionalInput('typical_section.crash_barrier.load', parseFloat(e.target.value))}
-          style={isCustom ? inputStyle : readOnlyInputStyle}
+          className={isCustom ? inputClass : readOnlyInputClass}
         />
       </div>
 
       {/* Spacing between Posts (m) for metallic */}
       {isMetallic && (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ width: `${railingOffset}px`, flexShrink: 0 }}>
-            <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000' }}>
+        <div className="flex items-center">
+          <div className="w-[200px] shrink-0">
+            <label className="text-xs font-bold text-black">
               Spacing between Posts (m):
             </label>
           </div>
@@ -207,11 +198,10 @@ export const CrashBarrierSubTab: React.FC<CrashBarrierSubTabProps> = ({ railingO
             step="0.1"
             value={cbPostSpacing ?? 2}
             onChange={(e) => updateAdditionalInput('typical_section.crash_barrier.post_spacing', parseFloat(e.target.value))}
-            style={inputStyle}
+            className={inputClass}
           />
         </div>
       )}
     </div>
   );
 };
-

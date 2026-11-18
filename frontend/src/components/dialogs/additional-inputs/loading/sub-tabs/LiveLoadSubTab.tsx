@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBridgeStore } from '../../../../../store/useBridgeStore';
-import { inputStyle } from '../../styles';
+import { inputClass, selectClass } from '../../styles';
 import { LoadDescriptionPanel } from './LoadDescriptionPanel';
 import { OsdagCheckbox } from '../../OsdagCheckbox';
 
@@ -24,57 +24,27 @@ export const LiveLoadSubTab: React.FC = () => {
   const fpPressureVal = additionalInputs['loading.live_load.footpath_pressure.value'] ?? '';
 
   return (
-    <div style={{ display: 'flex', gap: '16px', height: '100%', minHeight: 0 }}>
+    <div className="flex gap-4 h-full min-h-0">
       {/* Left Column */}
-      <div
-        className="card-scroll"
-        style={{
-          flex: '1.2',
-          minWidth: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          overflowY: 'auto',
-          paddingRight: '4px',
-        }}
-      >
+      <div className="card-scroll flex-[1.2] min-w-0 flex flex-col gap-3 overflow-y-auto pr-1">
         {/* Vehicles from IRC 6 */}
-        <div
-          style={{
-            border: '1px solid #c0c0c0',
-            borderRadius: '6px',
-            padding: '12px 16px',
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000', marginBottom: '10px' }}>
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+          <div className="text-xs font-bold text-black mb-2.5">
             Vehicles from IRC 6
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div className="flex flex-col gap-2">
             {vehicles.map((v) => {
               const checked = additionalInputs[v.id] ?? true;
               return (
                 <div
                   key={v.id}
                   onClick={() => updateAdditionalInput(v.id, !checked)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    cursor: 'pointer',
-                  }}
+                  className="flex items-center justify-between cursor-pointer"
                 >
-                  <label
-                    style={{
-                      fontSize: '12px',
-                      color: '#000000',
-                      cursor: 'pointer',
-                      userSelect: 'none',
-                    }}
-                  >
+                  <label className="text-xs text-black cursor-pointer select-none">
                     {v.label}
                   </label>
-                  <div style={{ width: '186px', display: 'flex', alignItems: 'center' }}>
+                  <div className="w-[186px] flex items-center">
                     <OsdagCheckbox
                       checked={Boolean(checked)}
                       onChange={(val) => updateAdditionalInput(v.id, val)}
@@ -88,38 +58,19 @@ export const LiveLoadSubTab: React.FC = () => {
         </div>
 
         {/* Braking Load from Vehicles */}
-        <div
-          style={{
-            border: '1px solid #c0c0c0',
-            borderRadius: '6px',
-            padding: '12px 16px',
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#000000', marginBottom: '10px' }}>
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+          <div className="text-xs font-bold text-black mb-2.5">
             Braking Load from Vehicles
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div className="flex flex-col gap-2.5">
             <div
               onClick={() => updateAdditionalInput('bl_irc_class_sv', !brakingSv)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                cursor: 'pointer',
-              }}
+              className="flex items-center justify-between cursor-pointer"
             >
-              <label
-                style={{
-                  fontSize: '12px',
-                  color: '#000000',
-                  cursor: 'pointer',
-                  userSelect: 'none',
-                }}
-              >
+              <label className="text-xs text-black cursor-pointer select-none">
                 Class SV
               </label>
-              <div style={{ width: '186px', display: 'flex', alignItems: 'center' }}>
+              <div className="w-[186px] flex items-center">
                 <OsdagCheckbox
                   checked={Boolean(brakingSv)}
                   onChange={(val) => updateAdditionalInput('bl_irc_class_sv', val)}
@@ -128,42 +79,31 @@ export const LiveLoadSubTab: React.FC = () => {
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <label style={{ fontSize: '12px', color: '#000000' }}>
+            <div className="flex items-center justify-between">
+              <label className="text-xs text-black">
                 Eccentricity from top of Deck (m)
               </label>
               <input
                 type="text"
                 value={eccentricity}
                 onChange={(e) => updateAdditionalInput('loading.live_load.eccentricity', e.target.value)}
-                style={inputStyle}
+                className={inputClass}
               />
             </div>
           </div>
         </div>
 
         {/* Footpath Pressure */}
-        <div
-          style={{
-            border: '1px solid #c0c0c0',
-            borderRadius: '6px',
-            padding: '12px 16px',
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <label style={{ fontSize: '12px', color: '#000000' }}>
+        <div className="border border-[#c0c0c0] rounded-[6px] p-[12px_16px] bg-white">
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-black">
               Footpath Pressure (kN/mm²)
             </label>
-            <div style={{ width: '186px', display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end' }}>
+            <div className="w-[186px] flex items-center gap-1.5 justify-end">
               <select
                 value={fpPressureMode}
                 onChange={(e) => updateAdditionalInput('loading.live_load.footpath_pressure.mode', e.target.value)}
-                className="osdag-select-field"
-                style={{
-                  ...inputStyle,
-                  width: fpPressureMode === 'Custom' ? '105px' : '186px',
-                }}
+                className={`${selectClass} ${fpPressureMode === 'Custom' ? '!w-[105px]' : '!w-[186px]'}`}
               >
                 <option value="As per IRC 6">As per IRC 6</option>
                 <option value="Custom">Custom</option>
@@ -175,10 +115,7 @@ export const LiveLoadSubTab: React.FC = () => {
                   value={fpPressureVal}
                   onChange={(e) => updateAdditionalInput('loading.live_load.footpath_pressure.value', e.target.value)}
                   placeholder=""
-                  style={{
-                    ...inputStyle,
-                    width: '75px',
-                  }}
+                  className={`${inputClass} !w-[75px]`}
                 />
               )}
             </div>
@@ -188,35 +125,35 @@ export const LiveLoadSubTab: React.FC = () => {
 
       {/* Right Column: Description Panel */}
       <LoadDescriptionPanel title="Live Load (LL)">
-        <p style={{ margin: '0 0 1px 0' }}>IRC Vehicles:</p>
-        <p style={{ margin: '0 0 8px 0' }}>
+        <p className="mb-[1px]">IRC Vehicles:</p>
+        <p className="mb-2">
           Live load considers standard IRC 6 vehicle classes: Class A, Class 70R (Wheeled, Tracked,
           Bogie), Class AA (Wheeled, Tracked), Class SV (Special Vehicle), and Fatigue vehicle. Only
           checked vehicles are included in the analysis.
         </p>
 
-        <p style={{ margin: '0 0 1px 0' }}>Braking Load (IRC 6 Cl. 211.2):</p>
-        <p style={{ margin: '0 0 1px 0' }}>
+        <p className="mb-[1px]">Braking Load (IRC 6 Cl. 211.2):</p>
+        <p className="mb-[1px]">
           Braking forces are derived from the live load. For single- or two-lane bridges: 20% of the
           first train of load plus 10% of succeeding trains in one lane.
         </p>
-        <p style={{ margin: '0 0 1px 0' }}>
+        <p className="mb-[1px]">
           For bridges with more than two lanes: as above for the first two lanes, plus 5% for each
           additional lane.
         </p>
-        <p style={{ margin: '0 0 8px 0' }}>
+        <p className="mb-2">
           Class SV does not require a braking load by default, but a checkbox is provided if the user
           wishes to include it.
         </p>
 
-        <p style={{ margin: '0 0 1px 0' }}>Braking Load Eccentricity:</p>
-        <p style={{ margin: '0 0 8px 0' }}>
+        <p className="mb-[1px]">Braking Load Eccentricity:</p>
+        <p className="mb-2">
           As per IRC 6, braking load acts as a horizontal longitudinal force applied at 1.2 m above the
           top of the deck surface.
         </p>
 
-        <p style={{ margin: '0 0 1px 0' }}>Footpath Pressure:</p>
-        <p style={{ margin: 0 }}>
+        <p className="mb-[1px]">Footpath Pressure:</p>
+        <p className="m-0">
           Footpath live load is applied as a uniform pressure per IRC 6. The default value follows the
           code; the user can switch to 'User-defined' to enter a custom value.
         </p>
